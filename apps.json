@@ -25,6 +25,15 @@
       ],
       "versions": [
         {
+          "version": "1.4.15",
+          "date": "2025-10-26",
+          "localizedDescription": "🔄 SYNC ADAPTER REVERT - Zurück zum funktionierenden Sync! 🐝\n\n✨ PR #12 KOMPLETT ZURÜCKGENOMMEN:\n\n❌ DAS PROBLEM MIT PR #12 (v1.4.12-v1.4.14):\n• Sync Adapter Architektur führte zu Problemen\n• Rezepte laden nicht automatisch\n• User-Reports: Kein Refresh möglich\n• Komplexität ohne echten Vorteil\n\n🔧 ROOT CAUSE:\n• PR #12 (19. Okt) führte SyncAdapter-System ein\n• Alle Provider umgebaut (Recipe, Notes, Calendar, Todo)\n• Neue Abstraktionsebene mit sync_adapters/\n• Versuche mit lazy: false und Auto-Load halfen nicht\n• Grundlegendes Architektur-Problem\n\n✅ DIE LÖSUNG IN v1.4.15:\n• PR #12 komplett revertiert (Commit 42205fa)\n• Zurück zum bewährten Sync-System VOR dem Refactor\n• RecipeProvider wie er vorher war\n• Alte registerSyncHandler() statt registerAdapter()\n• ABER: Auto-Load aus v1.4.14 BEHALTEN!\n• Rezepte laden jetzt beim Start MIT alter Architektur\n\n🎯 WAS ÄNDERT SICH:\n• Sync-Architektur ist wieder wie VOR PR #12\n• Keine SyncAdapter-Klassen mehr\n• RecipeProvider.loadRecipes() im Constructor (behalten!)\n• Einfacheres, bewährtes Sync-System\n• Alle Features funktionieren wieder\n\n📱 TECHNICAL DETAILS:\n• Revert von Commit 720ebdf (PR #12 merge)\n• Deleted: lib/services/sync_adapters/*.dart (5 Dateien)\n• Modified: lib/providers/*.dart (zurück zu alten Implementierungen)\n• Modified: lib/services/sync_service.dart (registerSyncHandler statt registerAdapter)\n• Auto-Load aus v1.4.14 beibehalten: loadRecipes(forceRefresh: false) im Constructor\n• Version: 1.4.15+49\n\n🔄 ALLE FEATURES FUNKTIONIEREN:\n• Recipe Management mit Auto-Load ✅\n• Notes Sync mit Backend ✅\n• Calendar Events Multi-Device Sync ✅\n• Todo System mit Auto-Generation ✅\n• Shopping Lists mit Username-Sharing ✅\n• Altes, bewährtes Sync-System ✅\n\n⚠️ WICHTIG:\nv1.4.15 = Revert von PR #12 + Auto-Load Fix aus v1.4.14\nZurück zum stabilen Sync-System!\nKeine experimentellen SyncAdapter mehr!",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.15.ipa",
+          "size": 17406813,
+          "sha256": "8a70bda53d3abde9487c47bdc576d9bd566b20c14f6db807057adaeadc799120",
+          "minOSVersion": "12.0"
+        },
+        {
           "version": "1.4.14",
           "date": "2025-10-26",
           "localizedDescription": "🎯 ENDLICH GEFIXT - Auto-Load für Rezepte! 🐝\n\n✨ ROOT CAUSE GEFUNDEN & BEHOBEN:\n\n❌ DAS PROBLEM (v1.4.12 & v1.4.13):\n• RecipeProvider wurde zwar instantiiert (lazy: false aus PR #12) ✅\n• Aber: RecipeProvider lud NICHT automatisch Rezepte beim Start! ❌\n• Nur wenn RecipeScreen manuell geöffnet wurde → Rezepte geladen\n• Auf Handy (frische Installation, kein Cache) → keine Rezepte\n• Auf Simulator (gecachte Daten) → Rezepte sichtbar\n\n🔍 DIAGNOSE AUS BACKEND LOGS:\n• Shopping Lists: GET /api/v1/shopping → funktioniert ✅\n• Shared Recipes: GET /api/v1/recipes/shared → funktioniert ✅\n• Eigene Rezepte: GET /api/v1/recipes → NICHT aufgerufen! ❌\n• JWT Token funktionierte einwandfrei ✅\n\n🔧 ROOT CAUSE ANALYSE:\n• PR #12 (19. Okt) refactored Sync-Architektur\n• RecipeProvider registriert nur SyncAdapter im Constructor\n• Aber: loadRecipes() wurde NIEMALS automatisch aufgerufen\n• RecipeScreen initState() ruft loadRecipes() auf → funktioniert\n• Aber: Wenn Screen nicht geöffnet → keine Rezepte geladen\n\n✅ DER FIX IN v1.4.14:\n• RecipeProvider Constructor ruft jetzt loadRecipes(forceRefresh: false)\n• AUTO-LOAD beim App-Start (auch ohne Screen zu öffnen)\n• Cache-First Pattern: Lädt aus Cache + Backend wenn online\n• Fire-and-Forget: Blockiert nicht den App-Start\n• Rezepte verfügbar sobald Provider instantiiert wird\n\n🎯 USER IMPACT - REZEPTE ENDLICH SICHTBAR:\n• Rezepte werden automatisch beim App-Start geladen ✅\n• Auch auf frischen Installationen ohne Cache ✅\n• Backend /api/v1/recipes Request wird aufgerufen ✅\n• Keine manuelle Navigation zum Recipe-Screen nötig ✅\n• Funktioniert identisch auf Simulator und Handy ✅\n\n📱 TECHNICAL DETAILS:\n• lib/providers/recipe_provider.dart:47 - loadRecipes() im Constructor\n• Offline-First bleibt erhalten (Cache → Backend → Merge)\n• SyncAdapter-Architektur aus PR #12 bleibt intakt\n• Version: 1.4.14+48\n\n🔄 ALLE FEATURES FUNKTIONIEREN:\n• Recipe Management mit Auto-Load ✅\n• Notes Sync mit Backend ✅\n• Calendar Events Multi-Device Sync ✅\n• Todo System mit Auto-Generation ✅\n• Shopping Lists mit Username-Sharing ✅\n\n⚠️ WICHTIG:\nv1.4.12 & v1.4.13 waren identisch (nur Version bump)\nv1.4.14 enthält den RICHTIGEN Fix!\nRecipes laden jetzt automatisch beim App-Start.",
@@ -436,7 +445,7 @@
           }
         ]
       },
-      "version": "1.4.14"
+      "version": "1.4.15"
     }
   ],
   "news": [
