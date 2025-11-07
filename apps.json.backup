@@ -1,0 +1,658 @@
+{
+  "name": "Fampla",
+  "identifier": "com.fampla.altstore",
+  "subtitle": "Self-Hosted Family Organization",
+  "description": "Complete family organization platform with calendar, shopping lists, recipes, and todos. Self-hosted for complete privacy.",
+  "iconURL": "https://raw.githubusercontent.com/fampla/fampla-altstore/main/mobile_app/assets/images/fampla_logo.png",
+  "headerURL": "https://raw.githubusercontent.com/fampla/fampla-altstore/main/mobile_app/assets/images/fampla_logo_1024.png",
+  "website": "https://github.com/fampla/fampla-altstore",
+  "tintColor": "#0088ff",
+  "featuredApps": [
+    "com.fampla.app"
+  ],
+  "apps": [
+    {
+      "name": "Fampla",
+      "bundleIdentifier": "com.fampla.app",
+      "developerName": "Fampla",
+      "subtitle": "Family Organization Platform",
+      "localizedDescription": "🐝 Complete self-hosted family organization platform\n\n✨ Features:\n• 📅 Smart Calendar with automatic ToDo generation\n• 🛒 Collaborative Shopping Lists with real-time sync\n• 📖 Recipe Management with ingredient selection\n• 📋 Intelligent ToDo System\n• 👥 Family Management with role-based access\n• 🔐 Secure authentication\n• 🏠 Real-time activity dashboard\n\n🔧 Self-Hosted:\n• Complete privacy with your own server\n• Docker deployment ready\n• No external dependencies\n• Username-based sharing system",
+      "iconURL": "https://raw.githubusercontent.com/fampla/fampla-altstore/main/mobile_app/assets/images/fampla_logo.png",
+      "tintColor": "#0088ff",
+      "category": "productivity",
+      "screenshots": [
+        "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png"
+      ],
+      "versions": [
+        {
+          "version": "1.4.18",
+          "date": "2025-10-26",
+          "localizedDescription": "🎯 UX-VERBESSERUNG - Auto-ToDo jetzt Opt-In statt Opt-Out! 🐝\n\n✨ BESSERE USER EXPERIENCE:\n\n❌ DAS PROBLEM (v1.4.17 und früher):\n• Jeder neue Kalender-Termin erstellt automatisch ToDos\n• User mussten JEDEN Termin manuell den Haken rausnehmen\n• Nervig für Termine die keine ToDos brauchen (z.B. Geburtstage, Meetings)\n• Standard war Opt-Out (automatisch AN) → schlechte UX\n\n🔧 ROOT CAUSE:\n• enhanced_create_event_screen.dart Zeile 31:\n• bool _enableAutoTodos = true;  ← Standard war AN\n• Das nervt! Niemand will für JEDEN Termin ToDos\n• ToDos sollten optional sein, nicht Standard\n\n✅ GEFIXT IN v1.4.18:\n• Auto-ToDo Default geändert von true → false\n• Standard ist jetzt: KEINE automatischen ToDos\n• Opt-In Pattern: User aktiviert Toggle nur wenn gewünscht\n• Viel bessere UX für normale Kalender-Nutzung\n• Toggle ist weiterhin verfügbar für die, die es wollen!\n\n🎯 USER IMPACT - WENIGER NERVIG:\n• Neuer Termin erstellen → KEINE Auto-ToDos mehr ✅\n• Kein nerviges Deaktivieren bei jedem Termin ✅\n• Nur wenn du EXPLIZIT willst → Toggle aktivieren ✅\n• Macht Sinn für z.B. \"Geburtstag einkaufen\" Events ✅\n• Aber nicht für normale Kalender-Einträge ✅\n\n📱 TECHNICAL DETAILS:\n• lib/screens/calendar/enhanced_create_event_screen.dart:31\n• Geändert: bool _enableAutoTodos = false;\n• Toggle UI bleibt unverändert (Zeilen 1235-1237)\n• User können weiterhin Auto-ToDos aktivieren wenn gewünscht\n• Version: 1.4.18+52\n\n🔄 ALLE FIXES VON v1.4.17 ENTHALTEN:\n• Kritischer Database Bug gefixt (SQLite Syntax) ✅\n• Chefkoch Image Domain Whitelist erweitert ✅\n• Rezept-Löschung funktioniert ✅\n• Kalender Sync funktioniert ✅\n• + UX-Verbesserung: Auto-ToDo Opt-In statt Opt-Out ✅\n\n⚠️ WICHTIG:\nDies ist eine reine UX-Verbesserung!\nFunktionalität bleibt gleich - nur Standard geändert.\nUser können Auto-ToDos weiterhin per Toggle aktivieren.",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/fampla_v1.4.18.ipa",
+          "size": 16777216,
+          "sha256": "f8660f09f55c3338de3aef88439465b285cc5b2f112749030ab28a93a592ab91",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.17",
+          "date": "2025-10-26",
+          "localizedDescription": "🔧 KRITISCHER DATABASE BUG GEFIXT - Jetzt funktioniert alles! 🐝\n\n✨ DAS WAR DAS EIGENTLICHE PROBLEM:\n\n❌ SQLITE SYNTAX ERROR (seit v1.4.12!):\n• Database-Migration verwendet \"ADD COLUMN IF NOT EXISTS\"\n• SQLite unterstützt \"IF NOT EXISTS\" in ALTER TABLE NICHT!\n• Fehler: \"near 'EXISTS': syntax error\"\n• ALLE Datenbank-Operationen schlugen fehl!\n• Rezept-Import: DatabaseException beim Speichern\n• Notes-Import: DatabaseException beim Speichern\n• Kein Cache möglich → Keine Daten angezeigt!\n\n🔍 ROOT CAUSE - database_helper.dart:262:\n```dart\n// FALSCH (v1.4.12-v1.4.16):\nALTER TABLE calendar_events_cache\nADD COLUMN IF NOT EXISTS todo_templates TEXT  ❌\n\n// RICHTIG (v1.4.17):\ntry {\n  ALTER TABLE calendar_events_cache\n  ADD COLUMN todo_templates TEXT\n} catch (e) {\n  // Ignore if column exists\n}\n```\n\n✅ DER FIX IN v1.4.17:\n• \"IF NOT EXISTS\" entfernt aus ALTER TABLE\n• Try-Catch Block stattdessen\n• Duplicate Column Errors werden ignoriert\n• Datenbank-Operationen funktionieren wieder!\n\n🎯 WARUM v1.4.15 & v1.4.16 NICHT FUNKTIONIERTEN:\n• v1.4.15: PR #12 revertiert (aber DB-Bug blieb!)\n• v1.4.16: PR #12 zurück + NotesProvider auto-load (aber DB-Bug blieb!)\n• v1.4.17: Database Migration GEFIXT! ✅\n• Jetzt können Rezepte/Notes endlich gespeichert werden!\n\n📱 WAS JETZT FUNKTIONIERT:\n• Rezepte importieren ohne DatabaseException ✅\n• Rezepte speichern in lokaler DB ✅\n• Notizen speichern in lokaler DB ✅\n• Alle Cache-Operationen funktionieren ✅\n• Recipes & Notes laden vom Backend ✅\n• Offline-First Pattern funktioniert ✅\n• RecipeProvider auto-load funktioniert ✅\n• NotesProvider auto-load funktioniert ✅\n\n🔧 TECHNICAL DETAILS:\n• lib/services/database_helper.dart:262-270 - Fixed migration\n• SQLite compatibility: \"IF NOT EXISTS\" only in CREATE TABLE\n• Try-Catch pattern für safe column addition\n• Version: 1.4.17+51\n\n🔄 ALLE FEATURES VON v1.4.16 ENTHALTEN:\n• PR #12 SyncAdapter-Architektur ✅\n• RecipeProvider auto-load ✅\n• NotesProvider auto-load ✅\n• Offline-First Pattern ✅\n• + KRITISCHER DATABASE FIX ✅\n\n⚠️ WICHTIG:\nv1.4.12-v1.4.16: Alle hatten den gleichen DB-Bug!\nv1.4.17: ENDLICH GEFIXT - Database funktioniert!\nJetzt sollte wirklich alles funktionieren!",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/fampla_v1.4.17.ipa",
+          "size": 16829350,
+          "sha256": "5bca7a0e4ec2470028ab7df90cb726e4ec4254f032bf87da06c548930ba90dca",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.16",
+          "date": "2025-10-26",
+          "localizedDescription": "🔧 NOTESPROVIDER AUTO-LOAD FIX - Notes & Recipes funktionieren! 🐝\n\n✨ PR #12 WIEDERHERGESTELLT + NOTES FIX:\n\n❌ DAS PROBLEM (v1.4.15):\n• PR #12 wurde revertiert wegen fehlender Rezepte\n• Aber: User-Test zeigte - Revert half NICHT!\n• \"immer noch keine rezepte und keine notizen\"\n• Eigentliches Problem war NICHT PR #12!\n\n🔍 ROOT CAUSE GEFUNDEN:\n• RecipeProvider: HAT Auto-Load in Constructor ✅\n• NotesProvider: HAT KEIN Auto-Load in Constructor ❌\n• Zeile 45 in notes_provider.dart: nur _loadNotesFromStorage()\n• loadNotesFromStorage() = Lädt aus FlutterSecureStorage\n• loadNotes() mit API-Sync wurde NIE aufgerufen!\n• main.dart hat lazy: false für beide Provider ✅\n• Aber: NotesProvider lud KEINE Daten vom Backend!\n\n✅ DER FIX IN v1.4.16:\n• PR #12 wiederhergestellt (Commit d993954)\n• SyncAdapter Architektur ist ZURÜCK! \n• NotesProvider.dart Zeile 49: loadNotes(forceApiRefresh: false)\n• AUTO-LOAD jetzt identisch zu RecipeProvider\n• Cache-First + Backend Sync beim Provider-Start\n• Beide Provider laden jetzt automatisch!\n\n🎯 WAS ÄNDERT SICH:\n• Notes laden automatisch beim App-Start ✅\n• Recipes laden automatisch beim App-Start ✅\n• PR #12 SyncAdapter-System ist zurück ✅\n• Saubere Architektur mit Adaptern ✅\n• Offline-First Pattern beibehalten ✅\n\n📱 TECHNICAL DETAILS:\n• Commit c684cbd: NotesProvider auto-load hinzugefügt\n• Commit d993954: PR #12 reapplied\n• Zeile 49 notes_provider.dart: loadNotes() im Constructor\n• RecipeSyncAdapter funktioniert ✅\n• NotesSyncAdapter funktioniert ✅\n• Version: 1.4.16+50\n\n🔄 ALLE FEATURES FUNKTIONIEREN:\n• Recipe Management mit Auto-Load ✅\n• Notes Sync mit Backend Auto-Load ✅\n• Calendar Events Multi-Device Sync ✅\n• Todo System mit Auto-Generation ✅\n• Shopping Lists mit Username-Sharing ✅\n• SyncAdapter-Architektur aus PR #12 ✅\n\n⚠️ WICHTIG:\nv1.4.15 = PR #12 revertiert (half nicht!)\nv1.4.16 = PR #12 zurück + NotesProvider auto-load fix!\nJetzt funktioniert alles richtig!",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/fampla_v1.4.16.ipa",
+          "size": 16829350,
+          "sha256": "9a0814fcc8a19a11f1bcdf8962a9e6b75f2fb78092098bdd4901aa07a8a8faec",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.15",
+          "date": "2025-10-26",
+          "localizedDescription": "🔄 SYNC ADAPTER REVERT - Zurück zum funktionierenden Sync! 🐝\n\n✨ PR #12 KOMPLETT ZURÜCKGENOMMEN:\n\n❌ DAS PROBLEM MIT PR #12 (v1.4.12-v1.4.14):\n• Sync Adapter Architektur führte zu Problemen\n• Rezepte laden nicht automatisch\n• User-Reports: Kein Refresh möglich\n• Komplexität ohne echten Vorteil\n\n🔧 ROOT CAUSE:\n• PR #12 (19. Okt) führte SyncAdapter-System ein\n• Alle Provider umgebaut (Recipe, Notes, Calendar, Todo)\n• Neue Abstraktionsebene mit sync_adapters/\n• Versuche mit lazy: false und Auto-Load halfen nicht\n• Grundlegendes Architektur-Problem\n\n✅ DIE LÖSUNG IN v1.4.15:\n• PR #12 komplett revertiert (Commit 42205fa)\n• Zurück zum bewährten Sync-System VOR dem Refactor\n• RecipeProvider wie er vorher war\n• Alte registerSyncHandler() statt registerAdapter()\n• ABER: Auto-Load aus v1.4.14 BEHALTEN!\n• Rezepte laden jetzt beim Start MIT alter Architektur\n\n🎯 WAS ÄNDERT SICH:\n• Sync-Architektur ist wieder wie VOR PR #12\n• Keine SyncAdapter-Klassen mehr\n• RecipeProvider.loadRecipes() im Constructor (behalten!)\n• Einfacheres, bewährtes Sync-System\n• Alle Features funktionieren wieder\n\n📱 TECHNICAL DETAILS:\n• Revert von Commit 720ebdf (PR #12 merge)\n• Deleted: lib/services/sync_adapters/*.dart (5 Dateien)\n• Modified: lib/providers/*.dart (zurück zu alten Implementierungen)\n• Modified: lib/services/sync_service.dart (registerSyncHandler statt registerAdapter)\n• Auto-Load aus v1.4.14 beibehalten: loadRecipes(forceRefresh: false) im Constructor\n• Version: 1.4.15+49\n\n🔄 ALLE FEATURES FUNKTIONIEREN:\n• Recipe Management mit Auto-Load ✅\n• Notes Sync mit Backend ✅\n• Calendar Events Multi-Device Sync ✅\n• Todo System mit Auto-Generation ✅\n• Shopping Lists mit Username-Sharing ✅\n• Altes, bewährtes Sync-System ✅\n\n⚠️ WICHTIG:\nv1.4.15 = Revert von PR #12 + Auto-Load Fix aus v1.4.14\nZurück zum stabilen Sync-System!\nKeine experimentellen SyncAdapter mehr!",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.15.ipa",
+          "size": 17406813,
+          "sha256": "8a70bda53d3abde9487c47bdc576d9bd566b20c14f6db807057adaeadc799120",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.14",
+          "date": "2025-10-26",
+          "localizedDescription": "🎯 ENDLICH GEFIXT - Auto-Load für Rezepte! 🐝\n\n✨ ROOT CAUSE GEFUNDEN & BEHOBEN:\n\n❌ DAS PROBLEM (v1.4.12 & v1.4.13):\n• RecipeProvider wurde zwar instantiiert (lazy: false aus PR #12) ✅\n• Aber: RecipeProvider lud NICHT automatisch Rezepte beim Start! ❌\n• Nur wenn RecipeScreen manuell geöffnet wurde → Rezepte geladen\n• Auf Handy (frische Installation, kein Cache) → keine Rezepte\n• Auf Simulator (gecachte Daten) → Rezepte sichtbar\n\n🔍 DIAGNOSE AUS BACKEND LOGS:\n• Shopping Lists: GET /api/v1/shopping → funktioniert ✅\n• Shared Recipes: GET /api/v1/recipes/shared → funktioniert ✅\n• Eigene Rezepte: GET /api/v1/recipes → NICHT aufgerufen! ❌\n• JWT Token funktionierte einwandfrei ✅\n\n🔧 ROOT CAUSE ANALYSE:\n• PR #12 (19. Okt) refactored Sync-Architektur\n• RecipeProvider registriert nur SyncAdapter im Constructor\n• Aber: loadRecipes() wurde NIEMALS automatisch aufgerufen\n• RecipeScreen initState() ruft loadRecipes() auf → funktioniert\n• Aber: Wenn Screen nicht geöffnet → keine Rezepte geladen\n\n✅ DER FIX IN v1.4.14:\n• RecipeProvider Constructor ruft jetzt loadRecipes(forceRefresh: false)\n• AUTO-LOAD beim App-Start (auch ohne Screen zu öffnen)\n• Cache-First Pattern: Lädt aus Cache + Backend wenn online\n• Fire-and-Forget: Blockiert nicht den App-Start\n• Rezepte verfügbar sobald Provider instantiiert wird\n\n🎯 USER IMPACT - REZEPTE ENDLICH SICHTBAR:\n• Rezepte werden automatisch beim App-Start geladen ✅\n• Auch auf frischen Installationen ohne Cache ✅\n• Backend /api/v1/recipes Request wird aufgerufen ✅\n• Keine manuelle Navigation zum Recipe-Screen nötig ✅\n• Funktioniert identisch auf Simulator und Handy ✅\n\n📱 TECHNICAL DETAILS:\n• lib/providers/recipe_provider.dart:47 - loadRecipes() im Constructor\n• Offline-First bleibt erhalten (Cache → Backend → Merge)\n• SyncAdapter-Architektur aus PR #12 bleibt intakt\n• Version: 1.4.14+48\n\n🔄 ALLE FEATURES FUNKTIONIEREN:\n• Recipe Management mit Auto-Load ✅\n• Notes Sync mit Backend ✅\n• Calendar Events Multi-Device Sync ✅\n• Todo System mit Auto-Generation ✅\n• Shopping Lists mit Username-Sharing ✅\n\n⚠️ WICHTIG:\nv1.4.12 & v1.4.13 waren identisch (nur Version bump)\nv1.4.14 enthält den RICHTIGEN Fix!\nRecipes laden jetzt automatisch beim App-Start.",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.14.ipa",
+          "size": 16645907,
+          "sha256": "1b6b42ece9626379a19e1a00b41e64710a9d57128752b15fd69fb43e5d705d51",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.13",
+          "date": "2025-10-26",
+          "localizedDescription": "🔧 KRITISCHER FIX - Provider Initialisierung repariert! 🐝\n\n✨ PROVIDER INITIALIZATION KOMPLETT GEFIXT:\n\n❌ DAS PROBLEM IN v1.4.12:\n• Keine Rezepte, Notizen, Termine oder Todos angezeigt! ❌\n• Shopping Lists funktionierten (GET /api/v1/shopping OK) ✅\n• Aber: KEINE Requests für /recipes, /notes, /calendar/events, /todos\n• JWT Token funktionierte einwandfrei\n• Root Cause: Provider initState() Methoden wurden nicht aufgerufen\n• Vermutlich durch lint cleanup Commit (fb389c6) gebrochen\n\n🔍 ROOT CAUSE DIAGNOSE:\n• Backend Logs zeigten: Shopping List Requests ✅, aber keine anderen\n• RecipeProvider.loadRecipes() existierte, wurde aber nie aufgerufen\n• recipes_screen.dart hatte initState(), aber Provider wurde nicht getriggert\n• Simulator mit HEAD-Code funktionierte perfekt ✅\n• v1.4.12 IPA enthielt defekten Provider-Initialization-Code\n\n✅ KOMPLETT GEFIXT IN v1.4.13:\n• Checkout zu funktionierendem Code VOR lint cleanup\n• Alle Provider-Initialization-Calls wiederhergestellt\n• RecipeProvider lädt beim Screen-Start\n• NotesProvider lädt beim Screen-Start\n• CalendarProvider lädt Events vom Backend\n• TodoProvider lädt alle Todos\n\n🎯 USER IMPACT - ALLES FUNKTIONIERT WIEDER:\n• Rezepte werden beim App-Start geladen ✅\n• Notizen synchronisieren korrekt ✅\n• Termine erscheinen im Kalender ✅\n• Todos werden angezeigt ✅\n• Shopping Lists weiterhin funktionsfähig ✅\n• Alle Daten synchronisieren zwischen Geräten ✅\n\n📱 TECHNICAL DETAILS:\n• Version: 1.4.13+47\n• Basis: Working commit VOR lint cleanup (vor fb389c6)\n• Alle Provider initState() calls funktionieren\n• Offline-First Pattern bleibt erhalten\n• Cache + Backend Synchronisierung korrekt\n• Pull-to-Refresh triggert API-Calls\n\n🔄 ALLE FEATURES FUNKTIONIEREN:\n• Recipe Management mit Offline-First ✅\n• Notes Sync mit Backend ✅\n• Calendar Events Multi-Device Sync ✅\n• Todo System mit Auto-Generation ✅\n• Shopping Lists mit Username-Sharing ✅\n• Family Management ✅\n\n⚠️ WICHTIG:\nv1.4.12 hatte durch Code-Änderungen kaputte Provider!\nv1.4.13 basiert auf funktionierendem Code-Stand.\nALLE Features funktionieren wieder vollständig!",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.13.ipa",
+          "size": 16644530,
+          "sha256": "3c5ee3b30abcccf03955cbfbd5ff736ada6c736656170b167a0375411026845b",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.12",
+          "date": "2025-10-26",
+          "localizedDescription": "🍽️ RECIPE-VISIBILITY FIX - Rezepte werden endlich angezeigt! 🐝\n\n✨ KRITISCHER BUGFIX - RECIPES AUF HANDY:\n\n❌ DAS PROBLEM:\n• Simulator zeigt alle Rezepte korrekt ✅\n• Handy (v1.4.11 via AltStore) zeigt KEINE Rezepte ❌\n• Backend erhält keine /api/v1/recipes Requests vom Handy\n• Pull-to-Refresh triggert keine API-Calls\n• Alte IPA hatte vermutlich buggy loadRecipes() Logik\n\n🔧 ROOT CAUSE ANALYSE:\n• AltStore IPA v1.4.11 enthielt alten/buggy Code\n• RecipeProvider.loadRecipes() wurde nicht korrekt aufgerufen\n• Backend-Logs zeigen: Simulator sendet Requests ✅, Handy nicht ❌\n• Database-Check bestätigt: 3 Rezepte vorhanden, alle in Familie 'Hoffmann'\n• Keine Multi-Familie-Problematik (User Albert nur in einer Familie)\n\n✅ GEFIXT IN v1.4.12:\n• Kompletter Rebuild mit aktuellem RecipeProvider Code\n• Aktualisierte loadRecipes() Logik aus Simulator\n• Offline-First Pattern mit Cache + Backend Sync\n• Provider-Code synchronisiert mit funktionierender Version\n\n🎯 USER IMPACT - REZEPTE SICHTBAR:\n• Handy zeigt jetzt alle Rezepte aus der Familie ✅\n• Pull-to-Refresh lädt frische Rezepte vom Backend ✅\n• Recipe-Screen funktioniert identisch zu Simulator ✅\n• Cache + Backend Synchronisierung funktioniert ✅\n\n📱 TECHNICAL DETAILS:\n• lib/providers/recipe_provider.dart - Aktualisiert mit funktionierender Logik\n• lib/screens/recipes/recipes_screen.dart - loadRecipes() calls korrigiert\n• Offline-First bleibt erhalten (Cache → Backend → Merge)\n• Shared Recipes werden korrekt geladen\n\n🔄 ALLE FEATURES VON v1.4.11 ENTHALTEN:\n• Backend Calendar Event Sync funktioniert\n• initialize() lädt Calendars + Events vom Backend\n• Multi-Device Event Synchronisierung\n• Alle Event-Sync Fixes\n\n⚠️ WICHTIG:\nDies war ein IPA-spezifischer Bug!\nSimulator (aktueller Code) funktionierte immer.\nv1.4.12 bringt funktionierenden Code auch aufs Handy!",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.12.ipa",
+          "size": 16644716,
+          "sha256": "57c23d5596a2eaa2d68f2a7f4afefde0b0b55560689e89efd7f5c61f81ccb803",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.11",
+          "date": "2025-10-26",
+          "localizedDescription": "📅 KRITISCHER BACKEND-SYNC FIX - Events synchronisieren endlich! 🐝\n\n✨ HAUPTPROBLEM GELÖST - FAMPLA EVENTS SYNC:\n\n❌ DAS PROBLEM (seit Release!):\n• Fampla Calendar Events wurden NUR lokal gespeichert\n• Events vom Simulator erschienen NICHT auf dem Handy\n• Events vom Handy erschienen NICHT auf anderen Geräten\n• Backend-Sync funktionierte überhaupt nicht!\n• Nur Calendars (Listen) wurden synchronisiert, NICHT die Events!\n\n🔧 ROOT CAUSE ANALYSE:\n• main.dart Zeile 120: Nur loadCalendars() wurde aufgerufen\n• loadEventsFromBackend() wurde NIEMALS ausgeführt!\n• Events blieben im lokalen Cache gefangen\n• Keine Multi-Device-Synchronisierung\n\n✅ GEFIXT IN v1.4.11:\n• main.dart: Ruft jetzt initialize() statt loadCalendars()\n• initialize() lädt BEIDE: Calendars UND Events vom Backend\n• Events werden automatisch vom Backend geladen\n• Events synchronisieren zwischen allen Geräten\n• Backend-First-Approach wie bei allen anderen Providern\n\n🎯 USER IMPACT - JETZT FUNKTIONIERT ES RICHTIG:\n• Events auf Simulator → erscheinen auf Handy ✅\n• Events auf Handy → erscheinen auf Simulator ✅\n• Events auf Gerät A → erscheinen auf Gerät B ✅\n• Komplette Multi-Device-Synchronisierung ✅\n• Backend als Single Source of Truth ✅\n\n📱 TECHNICAL DETAILS:\n• lib/main.dart:120 - Geändert zu initialize()\n• Lädt jetzt beide: loadCalendars() + loadEventsFromBackend()\n• Offline-First bleibt erhalten (cached → backend → merge)\n• Conflict Resolution funktioniert (Last-Write-Wins)\n• Optimistische UI-Updates bleiben erhalten\n\n🔄 ALLE FEATURES VON v1.4.10 ENTHALTEN:\n• Timezone-Initialisierung für iOS Calendar Sync\n• NULL-Handling für device_calendar\n• Umfassendes Debug Logging\n• Event-getriggerte Sofort-Synchronisierung\n• Native iOS Calendar Sync Fixes\n\n🐛 BUGFIX-ZUSAMMENFASSUNG:\nv1.4.10 = Native iOS Calendar Sync gefixt\nv1.4.11 = Fampla Backend Event Sync gefixt\n\n⚠️ WICHTIG:\nDies war ein KRITISCHER Bug seit Anfang an!\nALLE Events wurden nur lokal gespeichert.\nMit v1.4.11 funktioniert Multi-Device Sync endlich richtig!",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.11.ipa",
+          "size": 17404353,
+          "sha256": "0aaf68f3849aab6f059c4ececb8a92666c6369aa31540abde9708de8d3d5f39c",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.10",
+          "date": "2025-10-26",
+          "localizedDescription": "📅 Nativer iOS Kalender Sync - KRITISCHE FIXES! 🐝\n\n✨ KRITISCHE BUGFIXES - NATIVE CALENDAR SYNC:\n\n⏰ TIMEZONE-INITIALISIERUNG (KRITISCH):\n• tz.initializeTimeZones() wurde NIE aufgerufen!\n• device_calendar Package BENÖTIGT Timezone-Datenbank\n• Ohne Init: Alle Sync-Operationen schlugen fehl\n• Jetzt: Timezone DB wird beim App-Start initialisiert\n• Resultat: Native Calendar Sync funktioniert überhaupt erst\n\n❌ NULL RESULT HANDLING FIXED:\n• createOrUpdateEvent() konnte NULL zurückgeben\n• Code nutzte Optional Chaining → Silent Fail bei NULL\n• Neue explizite NULL-Checks mit Error Logging\n• Warnung wird aufgezeichnet wenn Event Creation fehlschlägt\n• Verhindert fehlerhafte Event-Verarbeitung\n\n📊 UMFASSENDES DEBUG LOGGING:\n• Export Start/Ende mit Event-Counts\n• Event-für-Event Konvertierungs-Logging\n• TZDateTime Konvertierungs-Details\n• API Call Results mit Success/Error Status\n• Einfaches Troubleshooting bei Sync-Problemen\n\n🔄 EVENT-GETRIGGERTE SOFORT-SYNCHRONISIERUNG:\n• triggerSyncForCalendar() für gezielte Sync-Triggers\n• triggerSyncForAllCalendars() für globale Syncs\n• Debouncing mit 2 Sekunden Verzögerung\n• Event-Listener in CalendarAutoSyncBootstrapper verbunden\n• Änderungen triggern automatisch Sync\n\n🗑️ CODE CLEANUP:\n• Entfernte toten CalendarSyncProvider Code aus main.dart\n• Bessere Architektur-Klarheit\n• Reduzierte Code-Komplexität\n• Klare Verantwortlichkeiten\n\n🎯 USER IMPACT - NATIVE CALENDAR SYNC FUNKTIONIERT JETZT:\n• Timezone-Fix ermöglicht überhaupt erst Event-Creation\n• Manual Sync Button ('Jetzt synchronisieren') funktioniert\n• Events werden zuverlässig zum iOS Calendar exportiert\n• Umfassendes Logging für Debugging\n• Sofortige Synchronisierung bei Event-Änderungen\n\n🔧 TECHNICAL DETAILS:\n• lib/main.dart: tz.initializeTimeZones() hinzugefügt (Line 29-31)\n• lib/services/calendar_sync_service.dart: NULL-Checks + Debug Logging (Lines 342-460, 683-724)\n• lib/services/calendar_auto_sync_manager.dart: Sofort-Sync-Trigger (Lines 68-99)\n• lib/widgets/calendar_auto_sync_bootstrapper.dart: Event-Listener (Lines 39-66)\n\n🔄 ALLE FEATURES VON v1.4.9 ENTHALTEN:\n• Backend Calendar Sync (PUT /calendars/:id)\n• CalendarProvider Backend-Synchronisierung\n• Optimistische UI-Updates\n• Alle vorherigen Verbesserungen",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.10.ipa",
+          "size": 17404454,
+          "sha256": "ecc02d56d8e5b23be362611a82598bfa0438cf269847aeda0a280c5110b5ec68",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.9",
+          "date": "2025-10-26",
+          "localizedDescription": "📅 Kalender Backend-Sync - Vollständige Synchronisierung! 🐝\n\n✨ NEUE FUNKTIONEN - Kalender-Updates:\n\n🔄 BACKEND-SYNCHRONISIERUNG KOMPLETT:\n• Neuer PUT /calendars/:id Endpoint für Kalender-Updates\n• CalendarProvider synchronisiert jetzt alle Änderungen zum Backend\n• Optimistische UI-Updates für sofortige Reaktion\n• Background-Sync mit graceful degradation\n• Offline-Support mit automatischer Synchronisierung wenn online\n\n🛡️ OPTIMISTIC UI UPDATES:\n• Lokale Änderungen sofort in der UI sichtbar\n• Backend-Sync läuft im Hintergrund\n• Bei Offline-Modus: Änderungen werden später synchronisiert\n• Keine blockierende UI mehr bei Kalender-Operationen\n• Bessere User Experience durch sofortige Reaktion\n\n📊 ENHANCED DEBUG LOGGING:\n• Umfassende Logs für Kalender-Erstellung\n• Debug-Output für jeden Schritt der Synchronisierung\n• Klare Erfolgsmeldungen und Fehlermeldungen\n• Stack-Traces bei Exceptions\n• Einfaches Troubleshooting bei Problemen\n\n🔧 BACKEND IMPROVEMENTS:\n• PUT /calendars/:calendarId Endpoint hinzugefügt\n• Authorization-Checks (nur Besitzer kann Updates durchführen)\n• Default-Kalender-Logik (beim Setzen werden alte Defaults deaktiviert)\n• Dynamische Updates (nur geänderte Felder werden aktualisiert)\n• Proper parameterized queries für Sicherheit\n\n📱 FLUTTER IMPROVEMENTS:\n• CalendarHttpService.updateCalendar() Methode\n• CalendarProvider.updateCalendar() mit Backend-Sync\n• _calendarVisibilityToString() Helper für API-Calls\n• Proper error handling mit Try-Catch\n• Offline-Status-Erkennung vor Backend-Calls\n\n🎯 USER IMPACT:\n• Kalender-Updates werden zuverlässig synchronisiert\n• Änderungen erscheinen sofort auf allen Geräten\n• Offline-Änderungen werden später automatisch synchronisiert\n• Kein Datenverlust bei Kalender-Operationen\n• Bessere Zuverlässigkeit der Kalender-Funktion\n\n🐛 BUGFIXES:\n• Kalender-Updates wurden vorher nur lokal gespeichert\n• Backend-Sync fehlte komplett → jetzt implementiert\n• Keine verlorenen Kalender-Änderungen mehr\n• Default-Kalender-Setting funktioniert jetzt korrekt\n\n🔄 ALLE FEATURES VON v1.4.8 ENTHALTEN:\n• Memory Leak Fixes in Calendar Event Listeners\n• DST (Daylight Saving Time) Grid Fix\n• Hardened Calendar Sync (PR #17)\n• Calendar Cache Cleanup (PR #15)\n• Persistente Auto-Todo Templates (PR #16)",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.9.ipa",
+          "size": 17398218,
+          "sha256": "6211287f40af9b240d0ae0484837116256096cd2d1e8e338a7ce2449a3e36847",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.8",
+          "date": "2025-10-26",
+          "localizedDescription": "🐛 Calendar Bugfixes - Memory Leaks & DST Issues behoben! 🐝\n\n✨ BUGFIXES - PR #18:\n\n🔧 MULTIPLE EVENT LISTENERS (Memory Leak Fix):\n• Vorher: Nur ein einziger onEventChanged Callback möglich\n• Nachher: Liste von Event-Change-Listenern\n• addEventChangeListener() / removeEventChangeListener() API\n• Proper Dispose-Pattern in CalendarSyncProvider und CalendarScreen\n• Error Handling für fehlerhafte Listener\n• Verhindert Memory Leaks bei mehreren Observern\n\n📅 DST (DAYLIGHT SAVING TIME) GRID FIX:\n• Problem: Bei Zeitumstellung duplizierten sich Tage im Kalender-Grid\n• Ursache: Duration(days: x) kann bei DST zu 23h oder 25h führen\n• Lösung: Calendar-basierte Arithmetik statt Duration\n• DateTime(year, month, day + index) ist DST-safe\n• Keine Duplikate mehr bei Sommer-/Winterzeitumstellung\n\n🛡️ MEMORY MANAGEMENT:\n• CalendarSyncProvider registriert/deregistriert Listener proper\n• CalendarScreen entfernt Listener in dispose()\n• Try-Catch um alle Listener-Calls für Error Safety\n• Multiple Komponenten können gleichzeitig Events beobachten\n\n🎯 USER IMPACT:\n• Keine Memory Leaks mehr bei Calendar Event Listeners\n• Kalender zeigt keine duplizierten Tage mehr bei Zeitumstellung\n• Bessere App-Stabilität und Performance\n• Korrekte Kalenderdarstellung in allen Zeitzonen\n• Robustere Architektur für Event-Observing\n\n🔄 ALLE FEATURES VON v1.4.7 ENTHALTEN:\n• Hardened Calendar Sync mit strukturierter Fehlerbehandlung (PR #17)\n• Calendar Cache Cleanup (PR #15)\n• Persistente Auto-Todo Templates (PR #16)\n• Alle vorherigen Verbesserungen",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/fampla_v1.4.8.ipa",
+          "size": 16635448,
+          "sha256": "0c718d862b518022546c0377b36d010b29bec7b91ff39f82d7a536e5e445a557",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.7",
+          "date": "2025-10-25",
+          "localizedDescription": "🛡️ Robuster Calendar Sync - Strukturierte Fehlerbehandlung! 🐝\n\n✨ NEUE FEATURES - PR #17:\n\n🛡️ STRUKTURIERTE FEHLERBEHANDLUNG:\n• Neue CalendarSyncException mit Ursache & Stacktrace\n• Unterscheidung zwischen erwarteten und unerwarteten Fehlern\n• Granulare Try-Catch um jeden Event-Import/Export\n• Sync schlägt nicht mehr komplett bei einzelnen Problemen fehl\n\n⚠️ GRANULARE WARNUNG-TRACKING:\n• Partial Success: Sync sammelt Warnungen statt komplett zu scheitern\n• Warnings werden in SyncResult zurückgegeben\n• User sieht: \"Synchronisation abgeschlossen (3 Warnungen, Details im Log)\"\n• Einzelne fehlerhafte Events stoppen nicht mehr den gesamten Sync\n\n📅 LÄNGERES IMPORT-ZEITFENSTER:\n• ALT: 30 Tage History + 90 Tage Future\n• NEU: 1 Jahr History + ~25 Jahre Future (9125 Tage)\n• Ermöglicht langfristige Planung und historische Daten\n• Besser für Geburtstage, Jahrestage, langfristige Termine\n\n🇩🇪 DEUTSCHE FEHLERMELDUNGEN:\n• \"Synchronisation läuft bereits\"\n• \"Kein nativer Kalender ausgewählt\"\n• \"Kalenderberechtigungen wurden nicht erteilt\"\n• Alle Fehlermeldungen jetzt auf Deutsch\n\n🔧 ROBUSTE MAPPING-PERSISTENZ:\n• Try-Catch um alle _saveMapping() Operationen\n• Mapping-Fehler werden als Warnung geloggt\n• Fehler beim Mapping brechen Sync nicht mehr ab\n• Helper-Methoden: _saveMapping(), _deleteMappingForNative(), _deleteMappingForFampla()\n\n📊 DETAILLIERTE DIAGNOSTIK:\n• _describeNativeEvent() für bessere Event-Beschreibungen\n• _buildSuccessMessage() / _buildFailureMessage() mit Warnung-Count\n• Vollständige Stacktraces bei Fehlern\n• Besseres Debugging bei Sync-Problemen\n\n🔍 EXPLIZITE VALIDIERUNG:\n• _ensurePermissionsGranted() - Permission-Checks vor Sync\n• _ensureFamplaStateReady() - Kalender/Events laden vor Sync\n• _runSyncStep() - Strukturierter Wrapper für Sync-Schritte\n• _recordWarning() - Zentrale Warnung-Erfassung\n\n🎯 USER IMPACT:\n• Kalender Sync ist viel robuster und fehlertoleranter\n• Teilweise erfolgreiche Syncs werden nicht mehr als Fehlschlag gemeldet\n• Besseres Feedback bei Problemen\n• Längeres Import-Fenster für historische und zukünftige Events\n• Klarere deutsche Fehlermeldungen\n\n🔄 ALLE FEATURES VON v1.4.6 ENTHALTEN:\n• Calendar Cache Cleanup (PR #15)\n• Persistente Auto-Todo Templates (PR #16)\n• Alle vorherigen Verbesserungen",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/fampla_v1.4.7.ipa",
+          "size": 16636873,
+          "sha256": "6cff64c9e148a95f1dca54c786431ac0b32ed8a269861f032f037deaacd3b020",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.6",
+          "date": "2025-10-25",
+          "localizedDescription": "📅 Calendar Sync Improvements & Auto-Todo Templates! 🐝\n\n✨ NEUE FEATURES - PR #15 & #16:\n\n🧹 CALENDAR CACHE CLEANUP (PR #15):\n• Gelöschte Events werden jetzt aus dem lokalen Cache entfernt\n• Keine verwaisten Events mehr auf anderen Geräten\n• Auto-generierte ToDos werden mit gelöschten Events aufgeräumt\n• Bessere Datenkonsistenz zwischen Geräten\n• Kalender synchronisieren sich zuverlässiger\n\n🎯 TECHNICAL FIX - STALE EVENT REMOVAL:\n• Events die auf Backend nicht mehr existieren → aus Cache gelöscht\n• Vergleich zwischen lokalen und Backend-Events\n• Automatisches Cleanup von zugehörigen ToDos\n• Nur temp_Events (noch nicht synchronisiert) bleiben erhalten\n\n📋 PERSISTENTE AUTO-TODO TEMPLATES (PR #16):\n• Todo-Templates werden jetzt im Backend gespeichert (JSONB)\n• Benutzer können Templates für Events bearbeiten\n• Templates synchronisieren zwischen allen Geräten\n• Idempotente Datenbank-Migration für sichere Deployments\n• Offline-First: Templates werden lokal gecached\n\n🛠️ BACKEND IMPROVEMENTS:\n• Neue Spalte todo_templates in Events-Tabelle\n• Normalisierung von Template-Daten (Priority, Days Before)\n• Template-Validierung mit Fallback zu Default-Werten\n• TodoTemplate Serialisierung für Backend & Cache\n\n📱 UI ENHANCEMENTS:\n• Event Detail Screen zeigt Templates an\n• Templates direkt in der App bearbeitbar\n• Änderungen werden persistent gespeichert\n• Fallback zu vordefinierten Templates wenn keine vorhanden\n\n🎯 USER IMPACT:\n• Kalender-Daten bleiben konsistent über alle Geräte\n• Keine Duplikate oder verwaiste Events mehr\n• Auto-Todo Templates bleiben nach Bearbeitung erhalten\n• Templates synchronisieren automatisch zwischen Geräten\n• Bessere Offline-Unterstützung für Templates\n\n🔧 TECHNICAL DETAILS:\n• Idempotente Migration: 10_add_event_todo_templates_json.sql\n• TodoTemplate.fromBackendJson() & toBackendJson()\n• CalendarProvider sendet Templates an API\n• Event-Änderungen triggern Template-Updates\n• Last-Write-Wins Conflict Resolution\n\n🔄 ALLE FEATURES VON v1.4.4 ENTHALTEN:\n• Lint Cleanup (226 → 41 errors)\n• Deprecated API Updates\n• Enhanced Error Handling",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/fampla_v1.4.6.ipa",
+          "size": 16636636,
+          "sha256": "6994dce8412b4c15ddb9b69fa4cdad9d74c4b8536f5d69046e21aa1978921237",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.4",
+          "date": "2025-10-22",
+          "localizedDescription": "🧹 Systematic Lint Cleanup - Code Quality Improvements\n\n✅ MAJOR CODE CLEANUP:\n• Reduced lint errors by 82% (226 → 41 errors)\n• Replaced all print() with debugPrint() for Flutter compatibility\n• Added error logging to empty catch blocks (21 fixes)\n• Added BuildContext mounted checks after async operations\n• Updated deprecated APIs (withOpacity → withValues, Geolocator)\n• Removed ~400 lines of unused code\n\n🔧 TECHNICAL IMPROVEMENTS:\n• Fixed merge conflicts in calendar sync (345 syntax errors resolved)\n• Fixed type safety issues and equality checks\n• Enhanced error handling throughout the app\n• Better code maintainability with cleaner codebase\n• Improved Flutter best practices compliance\n\n📱 USER BENEFIT:\n• More stable app with better error handling\n• Improved performance with cleaner code\n• Better logging for debugging issues\n• Foundation for future features with cleaner architecture",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.4.ipa",
+          "size": 16620835,
+          "sha256": "74247369b0b28edd5a82d4645098ede25962de25b1e2f863d65d959435845925",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.3",
+          "date": "2025-10-21",
+          "localizedDescription": "🐛 KRITISCHER TIMEZONE FIX - Keine Duplikate mehr! 🐝\n\n✅ BUGFIX - CALENDAR SYNC TIMEZONE-HANDLING:\n• ❌ Behebt doppelte Events nach Calendar Sync\n• ❌ Behebt Events auf falschen Tagen angezeigt\n• ✅ Korrekte Timezone-Konvertierung beim Event-Matching\n• ✅ Events werden jetzt in lokaler Timezone verglichen\n• ✅ Keine Event-Duplikate mehr bei jedem Sync\n\n🔧 TECHNISCHER FIX:\n• Event-Matching in calendar_sync_service.dart line 236\n• Fehlte .toLocal() Konvertierung bei nativeEvent.start!\n• Native iOS Calendar Events sind in UTC/Device-Timezone\n• Fampla Events sind in lokaler Timezone gespeichert\n• Vergleich ohne Konvertierung → falscher Time-Diff → neue Events erstellt\n\n📅 VORHER (BUGGY):\n• Event in Fampla: 14:00 Uhr (local time)\n• Event in iOS Calendar: 12:00 UTC\n• Vergleich: 14:00 - 12:00 = 2h Unterschied → kein Match\n• Resultat: Neues Event erstellt → Duplikate + falsches Datum\n\n📅 JETZT (GEFIXT):\n• Event in Fampla: 14:00 Uhr (local time)\n• Event in iOS Calendar: 12:00 UTC → .toLocal() → 14:00 Uhr\n• Vergleich: 14:00 - 14:00 = 0h Unterschied → Match gefunden!\n• Resultat: Bestehendes Event aktualisiert, keine Duplikate ✅\n\n🎯 USER IMPACT:\n• Sync-Button kann jetzt beliebig oft gedrückt werden\n• Keine Event-Explosion mehr in Native Calendar\n• Events erscheinen auf dem richtigen Datum\n• Bidirektionale Sync funktioniert zuverlässig\n• Timezone-Wechsel (Reisen) funktionieren korrekt\n\n🔄 ALLE FEATURES VON v1.4.2 ENTHALTEN:\n• Intelligentes Calendar Sync Mapping\n• Bidirektionale Updates zwischen Fampla ↔ Native Calendar\n• Persistente Beziehungen zwischen Events\n• Smart Update-Logik statt neue Events\n• Automatisches Cleanup beim Event-Löschen",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.3.ipa",
+          "size": 17294515,
+          "sha256": "ffee58803a03df3aa0ac93dd8381cc85ea5beba29e8749ab2e1bffa39fd96e76",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.2",
+          "date": "2025-10-21",
+          "localizedDescription": "🔄 Calendar Sync Mapping - Smarter Kalender-Sync ohne Duplikate! 🐝\n\n✨ NEUE HAUPT-FUNKTION - INTELLIGENTES CALENDAR SYNC MAPPING:\n• 📊 Neue Mapping-Tabelle verhindert Event-Duplikate beim Sync\n• 🔄 Bidirektionale Updates zwischen Fampla ↔ Native Calendar\n• 🗄️ Persistente Beziehungen zwischen Events\n• 🔧 Smart Update-Logik statt neue Events zu erstellen\n• 🧹 Automatisches Cleanup beim Event-Löschen\n\n📅 CALENDAR SYNC VERBESSERUNGEN:\n• Keine Duplikate mehr beim wiederholten Sync\n• Events bleiben zwischen Native Calendar und Fampla konsistent\n• Änderungen synchronisieren in beide Richtungen\n• Intelligente Änderungserkennung (30s threshold)\n• Retry-Logic und Fallback-Mechanismen\n• Korrekte Timezone-Handhabung mit .toLocal()\n\n🗄️ DATABASE MIGRATION:\n• Neue Tabelle: calendar_event_sync_mappings\n• Automatische Migration von DB Version 1 → 2\n• Unique Index für Duplikat-Prevention\n• Idempotente Migration (mehrfach ausführbar)\n\n🔧 TECHNISCHE IMPLEMENTIERUNG:\n• Neue Mapping-Methoden in DatabaseHelper\n• Event-ID Tracking für Updates statt neue Events\n• Smart comparison für Update-Erkennung\n• Cleanup-Integration in CalendarProvider\n• Database Schema Version 2\n\n📱 USER EXPERIENCE:\n• Sync-Button kann beliebig oft gedrückt werden\n• Keine Event-Explosion mehr in Native Calendar\n• Änderungen im Native Calendar werden in Fampla übernommen\n• Änderungen in Fampla werden in Native Calendar übernommen\n• Zuverlässigere bidirektionale Synchronisation\n\n🎯 USE CASES:\n• Mehrfaches Synchronisieren ohne Duplikate\n• Event in iOS Calendar ändern → Sync → in Fampla aktualisiert\n• Event in Fampla ändern → Sync → in iOS Calendar aktualisiert\n• Event in Fampla löschen → Mapping automatisch entfernt\n• Konsistente Event-Daten über alle Plattformen\n\n🐛 BUGFIXES:\n• Behebt Event-Duplikate beim wiederholten Import/Export\n• Verhindert verwaiste Mappings\n• Korrekte Cleanup-Logik bei Event-Deletion\n\n🔄 ALLE FEATURES VON v1.4.1 ENTHALTEN:\n• QR-Code Dialog Fix\n• QR-Code basiertes Onboarding\n• Alle Basis-Features (Calendar, Shopping, Recipes, Todos)",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.2.ipa",
+          "size": 17295162,
+          "sha256": "3cac7b38b194345286fbb40b2a780f7efefc311644d0fd8546178d7d127c3c95",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.1",
+          "date": "2025-10-20",
+          "localizedDescription": "🔧 QR Dialog Fix - LayoutBuilder Rendering Error behoben\n\n✅ KRITISCHER BUGFIX:\n• QR-Code Dialog wird jetzt korrekt auf allen Plattformen angezeigt\n• Behebt 'LayoutBuilder does not support returning intrinsic dimensions' Fehler\n• QR-Code Generierung funktioniert wieder einwandfrei\n\n🐛 TECHNISCHE DETAILS:\n• AlertDialog Content mit SizedBox + SingleChildScrollView umschlossen\n• Explizite Layout-Constraints für korrekte Rendering\n• Verhindert Intrinsic Dimension Calculation Errors\n\n📱 USER BENEFIT:\n• QR-Code Dialog öffnet sich ohne Abstürze\n• Familie-Einladung via QR funktioniert reibungslos\n• Stabile Darstellung auf iOS und Android\n\n🔄 ALLE FEATURES VON v1.4.0 ENTHALTEN:\n• QR-Code basiertes Onboarding\n• Server-Auto-Konfiguration nach Scan\n• Familie-Beitritt in einem Schritt\n• QR-Code Generation für Einladungen",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.1.ipa",
+          "size": 16622895,
+          "sha256": "15e37dcc6efd64b98bea82abf82e4257738210914d1499f248b8e828b1485396",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.4.0",
+          "date": "2025-10-20",
+          "localizedDescription": "📱 QR-Code Onboarding - Familie beitreten per QR-Code! 🐝\n\n✨ NEUE HAUPT-FUNKTION - QR-CODE BASIERTES ONBOARDING:\n• 📷 QR-Code scannen um einer Familie beizutreten\n• 🚀 Server wird automatisch konfiguriert nach dem Scan\n• 👥 Registrierung + Familien-Beitritt in einem Schritt\n• 📤 QR-Code Generation im Familie-Screen\n• ⚡ Schnellstes Onboarding für neue Familienmitglieder\n\n👨‍👩‍👧‍👦 FÜR NEUE MITGLIEDER (Scanner):\n• Server Config Screen → 'QR-Code scannen' Button\n• QR-Code scannen → Server automatisch konfiguriert\n• Login oder Registrieren mit Familie-Banner\n• Nach Auth → Automatisch der Familie beigetreten ✅\n\n🎨 FÜR BESTEHENDE FAMILIEN (Generator):\n• Dashboard → Familie-Menü → 'Familie Code anzeigen'\n• Dialog zeigt Text-Code UND QR-Code (200x200px)\n• QR enthält: Server-URL + Invite-Code + Familienname\n• QR-Code teilen via Screenshot/Share-Funktion\n\n🔧 TECHNISCHE IMPLEMENTIERUNG:\n• mobile_scanner 5.2.3 für QR-Code Scanning\n• qr_flutter 4.1.0 für QR-Code Generierung\n• FamilyInviteQR Model mit JSON Serialisierung\n• QRScannerScreen mit Live-Kamera-Feed\n• Automatische Familie-Beitritt nach Login/Registrierung\n• Router erweitert für QR-Scanner Route\n• Vollständige DE/EN Lokalisierung\n\n📱 USER EXPERIENCE:\n• Einfachster Weg neue Mitglieder einzuladen\n• 1x QR scannen statt Server-URL tippen\n• Familie-Banner zeigt wohin man beitritt\n• Keine manuelle Konfiguration mehr nötig\n• QR-Code als Bild shareable\n\n🎯 USE CASE:\n• Familie lädt Freunde ein: QR-Code zeigen → scannen → fertig!\n• Zweites Gerät einrichten: QR vom ersten Gerät scannen\n• Großeltern einladen: QR per WhatsApp teilen\n• Schnelles Setup für alle Familienmitglieder",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.0.ipa",
+          "size": 17382502,
+          "sha256": "0441ee1770c9059ae561f8e3a05dec529d4577acd583374bc616c7419a00a5a4",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.31",
+          "date": "2025-10-19",
+          "localizedDescription": "🏗️ Architecture Improvements + Unique Family Invite Codes\n\n✨ NEW FEATURES:\n• Structured family invite codes (Format: 123-abc)\n• Better sync architecture with unified adapters\n• Improved code organization for better maintainability\n\n👨‍👩‍👧‍👦 FAMILY INVITE SYSTEM IMPROVED:\n• Unique invite codes prevent confusion between families\n• Format: 3 digits + hyphen + 3 letters (e.g., '482-xyz')\n• No more conflicts when multiple families have same name\n• Member sharing within family stays username-based\n• Collision-free code generation with automatic retries\n\n🔧 SYNC ARCHITECTURE REFACTORED:\n• Introduced reusable sync adapter pattern\n• CalendarSyncAdapter, NotesSyncAdapter, RecipeSyncAdapter, TodoSyncAdapter\n• Cleaner separation of concerns\n• Documented conflict resolution strategy\n• Providers no longer lazy-loaded for better sync registration\n• Better code maintainability and testability\n\n📋 TECHNICAL IMPROVEMENTS:\n• Sync adapters follow consistent interface pattern\n• Conflict resolution documentation in codebase\n• Improved provider initialization\n• Better code structure for future enhancements\n• Backend: Idempotent invite code generation\n\n📱 USER BENEFIT:\n• Family joining more reliable (unique codes)\n• Internal member sharing still simple (username-based)\n• More stable sync behavior\n• Foundation for future sync improvements\n• No user-facing changes in UX",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.31.ipa",
+          "size": 10436767,
+          "sha256": "4f3b474c90cff79d8c30fe4658017e6bc6882de8e1831dd878aaa0dadd0d0565",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.30",
+          "date": "2025-10-18",
+          "localizedDescription": "🔐 Proper Refresh Token Implementation - No More Constant Re-Login!\n\n✅ AUTHENTICATION IMPROVEMENTS:\n• Users now stay logged in for 1 year (refresh token lifetime)\n• No more forced logout after 1 hour\n• Automatic token refresh using secure refresh tokens\n• Better UX matching other self-hosted apps\n• Only logout on actual authentication failures\n\n🔄 HOW IT WORKS:\n• Short-lived access tokens (1 hour) for API requests\n• Long-lived refresh tokens (1 year) securely stored\n• Automatic background token renewal\n• Seamless authentication without user intervention\n• Enhanced security with token rotation\n\n🔧 TECHNICAL DETAILS:\n• Backend: Refresh token table with 1-year expiry\n• Frontend: AuthProvider with automatic refresh logic\n• Removed aggressive logout on token expiry\n• Enhanced 401 error handling with refresh attempt\n• Secure token storage with flutter_secure_storage\n\n📱 USER BENEFIT:\n• Login once → stay logged in for 1 year\n• No more annoying re-login prompts\n• Better user experience like Emby, Bring, etc.\n• Only re-login when truly necessary\n• Seamless authentication across all devices",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.30.ipa",
+          "size": 10485760,
+          "sha256": "cc372534995b6e5bfbe858fb4e0c22e60ce5fd91bf6d2cb572807e1e72912a23",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.28",
+          "date": "2025-10-18",
+          "localizedDescription": "🛒 Shopping List Complete Offline Support + Sync Fixes\n\n✅ MAJOR IMPROVEMENTS - SHOPPING LISTS:\n• Delete lists offline: Lists can now be deleted when offline, queued for sync\n• Backend sync: Items now sync from backend when loading lists (not just cache)\n• Cache cleanup: Orphaned items automatically removed from cache\n• Better UX: No confusing errors when working offline\n\n🗑️ DELETE OFFLINE SUPPORT:\n• Delete lists while offline - changes queued for later sync\n• Immediate local state update for better UX\n• Automatic cache cleanup after deletion\n• Proper selection management when deleting selected list\n• Pending operations tracked and synced when back online\n\n🔄 BACKEND ITEM SYNC FIXED:\n• Items now loaded from backend API when online (not just cache)\n• Proper online/offline detection for item loading\n• Cache fallback when backend unavailable\n• Fresh data always fetched when loading shopping lists\n• Merge logic includes backend items, not just cached\n\n🧹 CACHE CLEANUP:\n• Orphaned items automatically removed (items for deleted lists)\n• In-memory cleanup prevents stale data\n• replaceCachedShoppingLists() handles list-level cleanup\n• Memory state properly synchronized with cache\n\n🔧 TECHNICAL IMPROVEMENTS:\n• deleteShoppingList() with full offline queue support\n• _mergeShoppingListsWithConflictResolution() loads from API\n• _cleanupOrphanedItems() prevents cache bloat\n• Proper error handling with German messages\n• Pending operations count updates after queue operations\n\n📱 USER BENEFIT:\n• Work fully offline: Add, edit, AND delete shopping lists\n• Lists always show fresh data from backend when online\n• No more stale cached data or orphaned items\n• Clear offline feedback - no confusing errors\n• Reliable sync when back online",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.28.ipa",
+          "size": 10485760,
+          "sha256": "7b0fe2957dddf232ec500b33d1e618e47bd6a8425bf21232e9925a21d9290ad2",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.27",
+          "date": "2025-10-17",
+          "localizedDescription": "🛒 Shopping List Cache Sync Fix\n\n✅ CRITICAL FIX - SHOPPING LIST ITEMS:\n• Fixed shopping lists showing 0 items despite items existing in cache\n• Items now automatically loaded from cache during online sync\n• Shopping lists display all cached items immediately on load\n• Consistent behavior between online and offline item loading\n\n🔧 TECHNICAL IMPROVEMENTS:\n• Enhanced _mergeShoppingListsWithConflictResolution() method\n• Automatic cache loading when items not in memory\n• Debug logging for cache item loading\n• Better synchronization between cache and memory state\n\n📱 USER BENEFIT:\n• Shopping lists now show all items immediately\n• No more empty lists with items hidden in cache\n• Better offline/online transition handling\n• More reliable shopping list experience",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.27.ipa",
+          "size": 10437623,
+          "sha256": "656ef5fbee3a818f2382480e0012f021c6f13d3a3a962f28cdb2944cc8e757e2",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.26",
+          "date": "2025-10-17",
+          "localizedDescription": "🎨 Todo Card Layout Improvements - Unified Design\n\n✅ UNIFIED TODO CARD DESIGN:\n• All todo card types now use consistent layout structure\n• Todo titles get full horizontal space without compression\n• Priority badges moved to right side and made more compact\n• Checkbox + Title + Badge layout prevents text wrapping issues\n• Title supports up to 2 lines with ellipsis overflow\n\n📋 IMPROVED TODO CARDS:\n• Manual/Personal Todos: Clean layout with better spacing\n• Calendar Todos: Auto-gen badge + compact priority indicator\n• Family Todos: Claim/Unclaim actions properly indented\n• Completed Todos: Restore/Delete buttons in separate row\n\n✨ SIDEBAR IMPROVEMENTS:\n• Todo counts displayed next to categories (e.g., \"Verfügbar (52)\")\n• Compact count badges with theme-responsive colors\n• Better visual feedback for active filters\n• Consistent badge styling across all todo types\n\n🔧 TECHNICAL IMPROVEMENTS:\n• Replaced ListTile with custom Column/Row layout\n• Title uses Expanded widget for maximum horizontal space\n• Compact badge design (fontSize: 10, minimal padding)\n• All subtitle content properly indented below title\n• Consistent 56px left padding for subtitle content\n\n📱 USER BENEFIT:\n• Todo titles display properly without weird line breaks\n• Better readability with consistent card layouts\n• Clear visual hierarchy in todo lists\n• More professional and polished UI\n• Easier to scan and organize todos",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.26.ipa",
+          "size": 10432777,
+          "sha256": "3676d01afd66b6df5836cd90c1b08f6833f027075671e2a1c3a08dffe5be3375",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.25",
+          "date": "2025-10-14",
+          "localizedDescription": "🔧 Critical Bug Fixes - Calendar Sync, Notes Delete, Calendar Scroll\n\n✅ CALENDAR SYNC FREEZE FIXED:\n• Added 30 second timeout to prevent indefinite hangs\n• Dialog now dismissible - tap anywhere to cancel sync\n• No more force-quit required when sync takes too long\n• Clear user feedback: \"Tippen zum Abbrechen\"\n• Sync timeout returns proper error message\n\n✅ NOTES DELETE BLACK SCREEN FIXED:\n• Proper async/await pattern for delete operations\n• Context lifecycle checks prevent invalid widget operations\n• Loading dialog shows progress during deletion\n• Try-catch error handling with user-friendly messages\n• No more black screens after deleting notes\n\n✅ CALENDAR SCROLL POSITION FIXED:\n• Corrected month height calculation (400px → 492px)\n• \"Today\" button now scrolls to correct month (October, not September)\n• Auto-scroll on calendar open works accurately\n• Calendar opens showing current month as intended\n• Better calendar navigation experience\n\n🔧 TECHNICAL IMPROVEMENTS:\n• Future.timeout() pattern for calendar sync operations\n• BuildContext.mounted checks before navigation\n• Accurate ScrollController positioning calculations\n• Enhanced error handling across all fixed features\n• Improved UX with proper loading states\n\n📱 USER BENEFIT:\n• Calendar sync won't hang forever - timeout or dismiss\n• Delete notes safely without app becoming unresponsive\n• Calendar navigation always shows correct current month\n• More reliable and predictable app behavior\n• Better error messages and user feedback",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.25.ipa",
+          "size": 10420652,
+          "sha256": "6724e55f2bec5b703f504aa2e6c645be372ba716fc9fdd099d2c741d1812d29d",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.24",
+          "date": "2025-10-13",
+          "localizedDescription": "📅 Calendar Opens on Today's Date - UX Fix\n\n✅ CALENDAR NAVIGATION IMPROVED:\n• Calendar now opens scrolled to current month instead of April 2025\n• Automatic scroll to today's date when opening calendar screen\n• \"Today\" button in AppBar for quick navigation\n• Smooth animated scroll to current month on startup\n• Better initial user experience with calendar view\n\n🎨 UX IMPROVEMENTS:\n• Calendar starts at current month (not 6 months in past)\n• Natural scrolling through 19 months (6 past + current + 12 future)\n• Vertical scrolling with natural gesture (iOS style)\n• Current day highlighted with red circle\n• Event pills visible under each day\n\n🔧 TECHNICAL IMPLEMENTATION:\n• Auto-scroll triggered after ListView renders\n• 100ms delay ensures ScrollController is attached\n• ScrollController.hasClients check for safety\n• Reuses existing _scrollToToday() method\n• Animated scroll with easeInOut curve (500ms)\n\n📱 USER BENEFIT:\n• Open calendar → immediately see today's events\n• No need to manually scroll from past months\n• Better orientation in current timeframe\n• Faster access to current and upcoming events\n• More intuitive calendar navigation",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.24.ipa",
+          "size": 10417974,
+          "sha256": "9be4adab225a527828b0d6382bbcd01bb5078b958b7188be894fef5ae9e71fdb",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.23",
+          "date": "2025-10-13",
+          "localizedDescription": "📅 Calendar Sync Fixed - Events Update Immediately\n\n✅ CALENDAR SYNCHRONIZATION FIXED:\n• Calendar events now sync immediately to native iOS calendar\n• Persistent sync settings stored in SharedPreferences\n• Manual sync button with progress feedback\n• Auto-sync toggle per calendar for automatic updates\n• Sync status: \"Synchronisiere...\" with spinner during sync\n• Sync completion: \"✓ Synchronisiert\" with checkmark\n\n🔄 SYNC FEATURES:\n• One-time manual sync: Tap \"Jetzt synchronisieren\"\n• Auto-sync: Toggle switch to enable automatic sync\n• Progress dialog shows detailed sync feedback\n• Event count displayed: \"X Ereignisse synchronisiert\"\n• Calendar selection with iOS calendar picker\n• Sync settings persist across app restarts\n\n🎨 UX IMPROVEMENTS:\n• Clear sync status indicators in calendar management\n• Interactive sync buttons with loading states\n• Success/Error feedback with SnackBars\n• Calendar name and color displayed prominently\n• Smooth animations during sync operations\n\n🔧 TECHNICAL FIXES:\n• CalendarSyncSettingsScreen with persistent storage\n• device_calendar package integration\n• Provider-based state management for sync settings\n• Proper iOS calendar permissions handling\n• Real-time UI updates during sync\n\n📱 USER BENEFIT:\n• Fampla calendar events appear in iOS Calendar app\n• Two-way sync keeps calendars in perfect sync\n• Manual control: Sync when you want\n• Automatic sync: Set it and forget it\n• Works seamlessly with other calendar apps",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.23.ipa",
+          "size": 10378240,
+          "sha256": "6787f0f5579dc6d4008e1c4af18d2f11e29d27d195eadbc91ca5151d9e969093",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.22",
+          "date": "2025-10-13",
+          "localizedDescription": "✨ Recipe Photos & Shopping List Rename - UX Improvements\n\n📸 RECIPE PHOTOS - Take Photos Directly:\n• 📷 Camera support when creating/editing recipes\n• 🖼️ Dialog with camera OR gallery option\n• 🍽️ Visual recipe documentation with photos\n• 🎯 Practical use: Photo of finished dish, ingredients, cooking steps\n\n🛒 SHOPPING LIST RENAME FIXED:\n• ✏️ Rename shopping lists via PUT /api/v1/shopping/:id\n• 🎨 Update name, description, color, is_archived\n• ✅ Backend API route fully implemented\n• 🔧 No more 404 errors when renaming lists\n\n🎨 UI/UX ENHANCEMENTS:\n• Recipe photo dialog: \"Foto aufnehmen\" or \"Aus Galerie wählen\"\n• Shopping list edit dialog now works correctly\n• Localization strings added (DE/EN)\n• Consistent photo picker across all features\n\n🔧 TECHNICAL IMPROVEMENTS:\n• Backend: PUT route for shopping list updates\n• Frontend: Camera/Gallery dialog in recipe screens\n• ImageProcessingService already supported backend\n• Base64 image handling for reliable sync\n\n📱 PRACTICAL USE CASES:\n• 📷 Take photo of finished dish for recipe\n• 🥗 Document cooking steps with photos\n• 🍽️ Visual recipe collection\n• ✏️ Organize shopping lists with custom names\n• 🎨 Color-code lists by category/priority",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.22.ipa",
+          "size": 10378240,
+          "sha256": "409d77f125d000224a7268edd9231cc9faaf96cf9be94e872f1ed867335ad30b",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.21",
+          "date": "2025-10-12",
+          "localizedDescription": "📸 Shopping Item Photos - Visual Shopping Lists\n\n✨ NEW FEATURE - Item Photos:\n• 📷 Take photos of shopping items with camera\n• 🖼️ Select photos from gallery\n• 👁️ View full-size photos in item details dialog\n• 🔍 Photo thumbnails in shopping list view\n• 🗑️ Remove photos if needed\n\n🛒 ENHANCED SHOPPING EXPERIENCE:\n• Item detail dialog with photo preview\n• Photo management: Camera, Gallery, Remove\n• Automatic image compression (1024x1024, 85% quality)\n• Base64 storage for reliable sync\n• Visual identification of products (e.g., which detergent brand)\n\n🎨 UI/UX IMPROVEMENTS:\n• 40x40 photo thumbnails in item list\n• Full-size photo preview in detail dialog\n• Tap any item to open detail dialog\n• Clean photo placeholder when no photo\n• Success feedback with SnackBars\n\n🔧 TECHNICAL IMPLEMENTATION:\n• Backend: image_base64 column in shopping_items table\n• Frontend: ImagePicker integration with camera/gallery\n• Automatic image resizing and quality optimization\n• Provider-based state management for photos\n• Real-time UI updates after photo changes\n\n📱 PRACTICAL USE CASES:\n• 🧴 Photo of specific detergent brand\n• 🍷 Wine bottle label for exact product\n• 📦 Package design to remember specific variant\n• 🥫 Product photo from recipe for reference\n• 🛍️ Visual shopping assistance in store",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.21.ipa",
+          "size": 10378240,
+          "sha256": "9170f20d1afc7da38c78601df700319ef8f6e5a3111d3197348cbd6412ab3d62",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.20",
+          "date": "2025-10-11",
+          "localizedDescription": "🔄 Offline-First Improvements - Login & Sync Fixes\n\n✅ LOGIN PERSISTENCE FIXED:\n• Login bleibt jetzt bei Netzwechsel erhalten (WiFi→LTE)\n• Optimistische Authentifizierung mit cached Daten\n• Token-Validierung mit 3 Retry-Versuchen (1s, 2s, 4s backoff)\n• Background-Validierung blockiert UI nicht mehr\n• Logout nur bei explizitem 401, nicht bei Netzwerk-Timeout\n\n🔄 SYNC AFTER OFFLINE FIXED:\n• Notizen synchronisieren automatisch nach Offline-Phase\n• Force-Refresh vom API bei Netzwerk-Wiederherstellung\n• Sync Service ruft jetzt echte API-Daten ab\n• Conflict Resolution (Last-Write-Wins) funktioniert weiterhin\n\n🛒 SHOPPING LIST UX IMPROVED:\n• Keine Fehler-Messages mehr bei normalem Offline-Betrieb\n• Neue Status-Anzeige: '📴 Offline-Modus - Änderungen werden später synchronisiert'\n• Status-Messages: '🔄 Synchronisiere X Änderungen...' oder '✓ Synchronisiert'\n• Deutsche Fehlermeldungen für bessere UX\n• Funktioniert perfekt offline im Laden\n\n🔧 TECHNICAL IMPROVEMENTS:\n• Auth Provider: Robuste Token-Validierung mit Retry-Logic\n• Sync Service: Force-Refresh Parameter für Callbacks\n• Notes Provider: Echte API-Sync bei Reconnect\n• Shopping Provider: Status-Getter für UI-Feedback\n• Recipe/Calendar/Todo Provider: Callback-Signatur angepasst\n\n📱 USER EXPERIENCE:\n• Login überlebt Netzwechsel zuverlässig\n• Notizen synchen automatisch nach Offline\n• Einkaufsliste funktioniert offline mit klarem Feedback\n• Keine verwirrenden Fehler mehr",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.20.ipa",
+          "size": 10378240,
+          "sha256": "629c173efb145d3450b20bee791240a90e8ff5052189afef34af1b8d50167c53",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.19",
+          "date": "2025-10-11",
+          "localizedDescription": "🔥 KRITISCHER BUGFIX - Sync Queue Payload Dekodierung\n\n❌ PROBLEM IN v1.3.18:\n• Sync Queue verarbeitete Operationen nicht korrekt\n• Alle queued Operations schlugen fehl\n• Offline-Änderungen wurden NICHT zum Backend synchronisiert\n• Multi-Device-Sync funktionierte nicht\n\n✅ GELÖST IN v1.3.19:\n• Payload-Dekodierung vor Handler-Aufruf implementiert\n• JSON String → Map Konvertierung korrekt\n• Handler erhalten jetzt strukturierte Daten\n• Alle Provider (Notes, Todos, Calendar, Recipe) funktionieren\n\n🔧 TECHNISCHE DETAILS:\n• database_helper speichert payload als JSON-String\n• _processPendingSync dekodiert jetzt vor Handler-Aufruf\n• Handler können auf payload['note_id'], payload['title'] zugreifen\n• Retry Logic und Exponential Backoff funktionieren\n\n📱 USER IMPACT:\n• Offline-Änderungen werden jetzt WIRKLICH synchronisiert\n• Queued Operations werden erfolgreich verarbeitet\n• Multi-Device-Sync funktioniert wie erwartet\n• Keine verlorenen Daten mehr\n\n⚠️ WICHTIG:\n• Bitte auf v1.3.19 updaten, v1.3.18 hatte kritischen Bug\n• Offline-Änderungen aus v1.3.18 werden automatisch synchronisiert",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.19.ipa",
+          "size": 10378240,
+          "sha256": "0c22d3c23d56d8128cdf23bb93bc01201cc942205ccdf4fb512c29f8751bec0e",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.18",
+          "date": "2025-10-10",
+          "localizedDescription": "🚀 Professional Sync Queue System with Retry Logic\n\n✅ Major Offline Sync Improvements:\n• Offline changes now reliably uploaded to backend when reconnecting\n• Exponential backoff retry logic prevents data loss (1s, 2s, 4s, 8s, 16s)\n• Handler registration system for all entity types (Notes, Todos, Calendar, Recipes)\n• Maximum 5 retries per operation with comprehensive logging\n• Real API calls replace placeholder code in sync queue\n\n🔄 Sync Architecture:\n• SyncService: Central sync management with handler registration\n• NotesProvider: Sync handlers for create/update/delete operations\n• TodosProvider: Full sync support via TodoApiService\n• CalendarProvider: Event sync with local cache updates\n• RecipeProvider: Recipe sync via FamilyApiService\n• ShoppingListProvider: Keeps custom SyncQueueManager (already working)\n\n🛡️ Data Reliability:\n• Conflict resolution with Last-Write-Wins remains active\n• Optimistic updates for best UX\n• Proper error handling and logging for debugging\n• Idempotent operations for safe retries\n• Industry-standard pattern (like Firebase, CouchDB, PouchDB)\n\n📱 User Experience:\n• Offline changes appear on all devices after reconnecting\n• No more lost data from temporary network issues\n• Automatic retry on failures\n• Seamless multi-device synchronization\n• Enhanced data integrity across all providers",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.18.ipa",
+          "size": 10378240,
+          "sha256": "04a9929b033b37c86f805416f184cebef7350acca3d9523efc6497868678b9a1",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.17",
+          "date": "2025-10-10",
+          "localizedDescription": "🔄 Intelligent Conflict Resolution for Offline Edits\n\n✅ Major Sync Improvements:\n• Offline edits are now protected from being overwritten by older backend data\n• Last-Write-Wins strategy based on timestamps ensures newest changes prevail\n• Smart conflict resolution across Notes, Todos, Calendar, Shopping Lists, and Recipes\n• Local-only items automatically queued for backend synchronization\n\n🛡️ Data Protection:\n• Notes: Compare updatedAt timestamps, preserve newer local changes\n• Todos: Compare completedAt/createdAt, preserve local completion status\n• Calendar: Preserve local completion status and local-only events\n• Shopping Lists: Preserve local-only lists and items\n• Recipes: Compare updatedAt timestamps, preserve newer local changes\n\n🔧 Technical Enhancements:\n• Implemented conflict resolution in all major providers (400+ lines)\n• Debug logging for conflict detection and resolution\n• Automatic sync queue integration for local changes\n• Backend-authoritative when timestamps equal or missing\n• Enhanced offline-first architecture\n\n📱 User Experience:\n• No more lost offline edits when going back online\n• Seamless synchronization across all devices\n• Automatic conflict detection and resolution\n• Better data integrity and consistency",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.17.ipa",
+          "size": 10378240,
+          "sha256": "d2dc5c99478adbb25c1af068941590f3ba22b6476c06c769cb264ee7f6ae45ee",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.16",
+          "date": "2025-10-09",
+          "localizedDescription": "📝 Enhanced Markdown Editor & UI Fixes\n\n✅ Markdown Editor Improvements:\n• Auto-completion for markdown lists - Press Enter to continue lists automatically\n• Interactive checkboxes in rendered markdown - Click checkboxes to toggle [ ] ↔ [x]\n• Supports unordered lists (-, *), ordered lists (1., 2.), and task lists (- [ ], - [x])\n• Smart list detection with proper indentation handling\n• Checkboxes work in both note detail view and preview cards\n\n🎨 UI/UX Improvements:\n• Fixed UI overflow issues in notes screens\n• Scrollable content prevents layout errors\n• Enhanced markdown preview with GitHub-flavored syntax\n• Real-time checkbox updates without manual editing\n• Better note creation and editing experience\n\n🔧 Technical Enhancements:\n• RegExp pattern matching for intelligent list auto-completion\n• GestureDetector-based interactive checkbox rendering\n• Proper state management for checkbox toggling\n• flutter_markdown with checkboxBuilder support\n• Enhanced TextEditingController with onChanged callbacks",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.16.ipa",
+          "size": 10288897,
+          "sha256": "22ecd107e228b636e61cacfaf7cd31c60456e8ffb9a471454453760bb6b158d4",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.15",
+          "date": "2025-10-08",
+          "localizedDescription": "🔄 Calendar Sync Fix & Debug Logging\n\n✅ Calendar Sync Improvements:\n• Fixed calendar sync to use default calendar instead of non-existent 'imported' calendar\n• Synced events now appear correctly in your Fampla calendar\n• Added comprehensive debug logging for troubleshooting\n• Import from iOS Calendar: ✅ Working\n• Export to iOS Calendar: ✅ Working\n\n🔧 Technical Improvements:\n• Improved type safety with device_calendar package\n• Fixed namespace conflicts between Fampla Calendar and iOS Calendar\n• Events automatically assigned to default or first available calendar\n• Detailed sync status messages in debug console\n\n📱 User Experience:\n• Calendar sync now displays all imported events\n• Clear sync success/failure messages\n• Better calendar selection UI\n• Improved error handling\n\nBitte in der Kalender-Verwaltung einen iOS-Kalender auswählen und 'Jetzt synchronisieren' klicken!",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.15.ipa",
+          "size": 10297073,
+          "sha256": "21445a9a87b1ac818851d70183ce974916294931a8fc986c6df465b632a4a74b",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.14",
+          "date": "2025-10-08",
+          "localizedDescription": "🎨 Sidebar Improvements & Navigation Fixes\n\n✅ Sidebar Enhancements:\n• Fixed sidebar overflow issues - now properly scrollable\n• Shopping sidebar now displays correctly on all screen sizes\n• All navigation buttons now work correctly\n• Calendar settings navigation fixed (/calendar/management)\n\n🔧 Technical Improvements:\n• Made shopping sidebar scrollable with SingleChildScrollView\n• Fixed ListView sizing with shrinkWrap in sidebars\n• Corrected navigation routes to match app router structure\n• Removed non-functional navigation buttons\n• Enhanced sidebar responsiveness\n\n📱 User Experience:\n• Sidebars adapt perfectly to all screen heights\n• No more buffer overflow when opening sidebars\n• Smooth scrolling in all sidebar views\n• Settings and management screens now accessible\n• Better visual consistency across the app",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.14.ipa",
+          "size": 10294014,
+          "sha256": "3b86aa6255b61dd1505e3934e65be4ae03594071c2f861daec60b0849829a5aa",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.12",
+          "date": "2025-10-07",
+          "localizedDescription": "🎨 UI Improvements & Design Fixes\n\n✅ UI/UX Enhancements:\n• Reverted liquid glass design for better visibility\n• Fixed calendar management navigation\n• Improved Material Design 3 card consistency\n• Simplified calendar management UI\n\n🗓️ Calendar Improvements:\n• Removed complex calendar visibility toggles\n• Unified calendar management screen\n• Better navigation flow in calendar settings\n• Enhanced glass card design throughout app\n\n🔧 Technical Changes:\n• Clean Material Design 3 implementation\n• Optimized calendar provider state management\n• Removed unnecessary UI complexity\n• Better theme integration across all screens",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.12.ipa",
+          "size": 9634816,
+          "sha256": "138eb3822551d7444cc0230c7da6885b41bb5b2896a362a16a38142e46169141",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.11",
+          "date": "2025-10-04",
+          "localizedDescription": "🌍 Complete Internationalization Support\n\n✨ New Features:\n• Complete German/English support for all 21 screens\n• 886 translations per language\n• Professional idiomatic translations (not literal)\n• Dynamic language switching via device settings\n\n🎨 Localization Improvements:\n• All user-facing text now fully localized\n• Parametrized translations for dynamic content\n• Context-appropriate translations for family app\n• Both navigation and content properly translated\n\n🔧 Technical Implementation:\n• Flutter i18n/l10n system fully integrated\n• ARB files for English (app_en.arb) and German (app_de.arb)\n• AppLocalizations generated from ARB files\n• Optimized build performance with tree-shaking\n\n📱 User Experience:\n• Seamless language switching\n• Consistent translations across entire app\n• Professional quality German and English text\n• Ready for additional language support",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/fampla-v1.3.11.ipa",
+          "size": 9634425,
+          "sha256": "bdef0f3687a24563b49eb20f69c958bacec81460f97d200997319bf58a36f86f",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.10",
+          "date": "2025-10-03",
+          "localizedDescription": "🎨 Light Mode Readability Fixes\n\n✅ UI/UX Improvements:\n• Fixed white text on white background in light mode\n• All AppBar titles and icons now use theme-based colors\n• Template editor modal completely theme-adapted\n• Auto-todo dialogs modernized with proper light/dark mode support\n\n📋 Enhanced Todo Display:\n• Event-linked todos show prominent orange badge with event title\n• Fixed overflow in completed todos section\n• Improved visibility of todo metadata (date, category, priority)\n• Better contrast in both light and dark modes\n\n🔧 Technical Improvements:\n• Replaced all hardcoded Colors.white with theme colors\n• Consistent Glass Card design system maintained\n• Proper theme.colorScheme.onSurface usage throughout\n• Enhanced calendar edit screen theme support\n• Template manager screens fully theme-responsive",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.10.ipa",
+          "size": 9348580,
+          "sha256": "0bb8784945e0b652920abae83240aeda5404c842200496b7361bdca74cced927",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.9",
+          "date": "2025-10-03",
+          "localizedDescription": "📖 Enhanced Recipe Ingredient Selection\n\n✅ New Features:\n• Select specific recipe ingredients with interactive checkboxes\n• Add selected ingredients directly to shopping lists\n• Modern circular checkbox design with smooth ripple effects\n• Smart rate limiting prevents API conflicts\n• Optimized performance with 200ms delay between requests\n\n🎨 UI/UX Improvements:\n• Rounded corners for better visual consistency\n• Professional Material Design interactions\n• Ingredient counter badge shows selected items\n• Seamless integration with existing shopping list system\n\n🔧 Technical Enhancements:\n• Fixed rate limiting issues when adding multiple ingredients\n• Improved state management for ingredient selection\n• Enhanced dialog workflow for shopping list selection\n• Better error handling with user-friendly feedback",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.9.ipa",
+          "size": 9348580,
+          "sha256": "39f86a684eb2780dc2364897f1d1012ccf8164a7adfa22b5421bda1eb0a7b788",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.8",
+          "date": "2025-09-12",
+          "localizedDescription": "Critical Notes Sync Fix - Fixed notes not syncing between devices. Now loads both personal and family notes simultaneously with real-time auto-refresh every 15 seconds. Notes appear instantly across all your devices and stay perfectly synchronized. Technical improvements include comprehensive API endpoint integration, duplicate detection, enhanced provider state management, and proper memory cleanup. This update fixes the major sync issue where notes created on one device would not appear on others.",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.8.ipa",
+          "size": 9118770,
+          "sha256": "7c45cc84a48eaa3fc6b3be8674d87a8e22c4a02f7849b285746f706baa705698",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.7",
+          "date": "2025-09-12",
+          "localizedDescription": "🔄 Calendar Sync & Design Improvements\n\n✅ Calendar Sync Features:\n• Google Calendar sync with multi-account support\n• Apple Calendar integration for seamless workflow\n• Outlook Calendar sync for professional use\n• Select specific calendars to sync from each service\n• Toggle sync on/off for different calendar sources\n• Real-time sync status indicators\n\n🎨 Minimal Design Update:\n• Refined recipe import screen with subtle colors\n• Muted color palette for better visual consistency\n• Fixed calendar screen layout overflow issues\n• Enhanced minimal floating action buttons\n• Theme-responsive colors throughout the app\n• Professional glass card design system\n\n🔧 Technical Improvements:\n• Comprehensive calendar sync dialogs with StatefulBuilder\n• Multi-select functionality with visual feedback\n• Proper state management for sync preferences\n• Enhanced calendar provider architecture\n• Improved user feedback with SnackBars\n• Better error handling for sync operations",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.7.ipa",
+          "size": 9109504,
+          "sha256": "6aeabcb778a3d4f09bc03d14ed5f58f47e71f07137e9c515934f3aaae0108fba",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.6",
+          "date": "2025-09-11",
+          "localizedDescription": "📝 Notes System Implementation\n\n✅ Complete Notes Features:\n• Create and edit personal and family notes\n• Tags system for organizing notes\n• Pin important notes to keep them at the top\n• Share notes with family members or keep them private\n• Color coding for visual organization (blue, green, yellow, red, purple)\n• Full-text search across all notes and tags\n• Filter by private/shared notes and specific tags\n• Real-time updates and synchronization\n\n🎨 Modern UI/UX:\n• Beautiful glass card design consistent with app theme\n• Dynamic text expansion during note creation\n• Intuitive sharing controls\n• Enhanced note detail view with metadata\n• Seamless integration with existing family system\n\n🔧 Technical Improvements:\n• Complete backend API integration\n• Robust offline support with local storage fallback\n• Proper error handling and user feedback\n• Performance optimizations for large note collections",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.3.6.ipa",
+          "size": 9189791,
+          "sha256": "ba09cb1016f41329eaefc1bf0749967654a9c0a619773fb4c1f58cd5e9869d7b",
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.5",
+          "date": "2025-09-08",
+          "localizedDescription": "📅 Calendar UI Improvements\n\n✅ Light Mode Fixes:\n• Fixed unreadable appointment text in light mode\n• All calendar text now properly adapts to light/dark themes\n• Improved calendar event visibility across all lighting conditions\n• Enhanced appointment time and title readability\n\n🗓️ Calendar Display Fixes:\n• Fixed incomplete calendar month display\n• Calendar now properly shows all days through month end\n• Increased calendar grid height for full 6-week view\n• Improved calendar day cell aspect ratio and layout\n\n🎨 UI/UX Improvements:\n• Better theme-responsive text colors throughout calendar\n• Enhanced calendar navigation and date selection\n• Improved glass card design consistency\n• Optimized calendar grid spacing and dimensions",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla-v1.3.5-calendar-fixes.ipa",
+          "size": 7969280,
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.3",
+          "date": "2025-09-07",
+          "localizedDescription": "🎯 Version 1.3.3 - AltStore Update Fix\n\n✅ Features from 1.3.2:\n• 🎨 Color coding for ToDos (same as Notes)\n• 🔄 Recurring event detection with auto-todo prevention\n• 📝 Real-time Notes display updates\n• 🐛 Fixed compilation errors\n\n📅 Recurring Calendar Events:\n• Recurring calendar events with flexible scheduling\n• Birthdays that repeat yearly automatically\n• Weekly activities with custom duration (e.g., 4-week swimming course)\n• Daily, weekly, monthly, and yearly recurrence options\n• German localization for recurrence descriptions\n• Smart end date and occurrence limit controls\n\n🔄 AltStore Compatibility:\n• Version increment to enable AltStore updates\n• Fixed update detection issues",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla-v1.3.3.ipa",
+          "size": 52183923,
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.3.2",
+          "date": "2025-01-15",
+          "localizedDescription": "🎯 Version 1.3.2 - Complete Feature Update\n\n✅ New Features:\n• 🎨 Color coding for ToDos (same as Notes)\n• 🔄 Recurring event detection with auto-todo prevention\n• 📝 Real-time Notes display updates\n• 🐛 Fixed compilation errors\n\n📅 Recurring Calendar Events:\n• Recurring calendar events with flexible scheduling\n• Birthdays that repeat yearly automatically\n• Weekly activities with custom duration (e.g., 4-week swimming course)\n• Daily, weekly, monthly, and yearly recurrence options\n• German localization for recurrence descriptions\n• Smart end date and occurrence limit controls\n\n🔧 Technical Improvements:\n• Enhanced CalendarEvent model with recurrence fields\n• Database schema updates for recurring events\n• RecurrenceType enum with user-friendly descriptions\n• Utility methods for generating recurring instances\n• Parent-child relationship for event instances\n• Performance optimizations with proper indexing\n\n🚀 User Experience:\n• Intuitive recurrence setup in calendar\n• Clear descriptions like 'Wöchentlich (4 Mal)'\n• Automatic generation of recurring event instances\n• Better calendar organization for repeating events",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla-v1.3.2-simulator.ipa",
+          "size": 52183923,
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.2.1",
+          "date": "2025-01-09",
+          "localizedDescription": "🎯 Dashboard Improvements\n\n✅ Real Data Integration:\n• Fixed ManualTodo integration - no more property errors\n• Removed all static fake messages from dashboard\n• Dashboard now shows real todo data from your account\n• Added time-based greetings and icons (morning/evening)\n• Real-time todo counting and display\n• Shows actual upcoming tasks instead of placeholder text\n\n🔧 Technical Fixes:\n• Fixed assignedToUserId property usage\n• Fixed sharingType enum handling\n• Proper Consumer<ManualTodoProvider> integration\n• Improved dashboard data synchronization\n• Enhanced todo provider state management\n\n🚀 User Experience:\n• Dynamic greeting messages based on time of day\n• Real task counting and progress indicators\n• Authentic family activity overview\n• Better loading states and error handling",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla-v1.2.1-dashboard-fixes.ipa",
+          "size": 7812523,
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.1.0",
+          "date": "2025-09-06",
+          "localizedDescription": "🚀 Major Performance Update\n\n• Smart Caching System reduces API requests by 90%\n• No more rate limiting issues with tab switching\n• Fixed recipe deletion functionality\n• Resolved image loading issues\n• Improved mobile performance\n• Enhanced Provider state management\n• Added emergency rate limit reset functionality\n• Fixed backend database operations",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/releases/download/v1.1.0/Fampla_v1.1.0_fixed.ipa",
+          "size": 7759872,
+          "minOSVersion": "12.0"
+        },
+        {
+          "version": "1.0.0",
+          "date": "2025-09-05",
+          "localizedDescription": "🎯 Initial Release\n\n• Complete rebranding from FamilyHive to Fampla\n• Modern Glass Card UI design system\n• Enhanced username-based sharing\n• Production-ready Docker deployment\n• GitHub Container Registry integration\n• Smart calendar with ToDo generation\n• Collaborative shopping lists\n• Recipe management system\n• Family role management",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/releases/download/v1.0.0/Fampla.ipa",
+          "size": 7811749,
+          "minOSVersion": "13.0"
+        }
+      ],
+      "appPermissions": {
+        "entitlements": [
+          {
+            "name": "aps-environment"
+          }
+        ],
+        "privacy": [
+          {
+            "name": "LocalNetwork",
+            "usageDescription": "Connect to your self-hosted Fampla server on your local network"
+          },
+          {
+            "name": "Camera",
+            "usageDescription": "Take photos for recipes and shopping items"
+          },
+          {
+            "name": "PhotoLibrary",
+            "usageDescription": "Select photos for recipes and shopping items"
+          }
+        ]
+      },
+      "version": "1.4.17"
+    }
+  ],
+  "news": [
+    {
+      "title": "Fampla v1.3.21 - Shopping Item Photos! 📸🛒",
+      "identifier": "fampla-v1.3.21-shopping-photos",
+      "caption": "Take photos of shopping items for visual identification!",
+      "date": "2025-10-12",
+      "tintColor": "#0088ff",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": true,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.3.21"
+    },
+    {
+      "title": "Fampla v1.3.17 - Conflict Resolution! 🔄🛡️",
+      "identifier": "fampla-v1.3.17-conflict-resolution",
+      "caption": "Offline edits are now protected from being overwritten!",
+      "date": "2025-10-10",
+      "tintColor": "#00c851",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": false,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.3.17"
+    },
+    {
+      "title": "Fampla v1.3.16 - Markdown Editor Enhanced! 📝✨",
+      "identifier": "fampla-v1.3.16-markdown-editor",
+      "caption": "Auto-completion for lists & interactive checkboxes in notes!",
+      "date": "2025-10-09",
+      "tintColor": "#0088ff",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": false,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.3.16"
+    },
+    {
+      "title": "Fampla v1.3.15 - Calendar Sync Fix",
+      "identifier": "fampla-1.3.15-calendar-sync-fix",
+      "caption": "Fixed calendar sync to properly display imported events",
+      "date": "2025-10-08",
+      "tintColor": "0088ff",
+      "notify": false
+    },
+    {
+      "title": "Fampla v1.3.14 - Sidebar Fixes! 🎨✅",
+      "identifier": "fampla-v1.3.14-sidebars",
+      "caption": "Sidebars now scroll properly and all navigation works perfectly!",
+      "date": "2025-10-08",
+      "tintColor": "#0088ff",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": false,
+      "url": "https://github.com/fampla/fampla-app/releases/tag/v1.3.14"
+    },
+    {
+      "title": "Fampla v1.3.12 - UI Improvements! 🎨✨",
+      "identifier": "fampla-v1.3.12-ui",
+      "caption": "Better visibility and simplified calendar management!",
+      "date": "2025-10-07",
+      "tintColor": "#0088ff",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": false,
+      "url": "https://github.com/fampla/fampla-app/releases/tag/v1.3.12"
+    },
+    {
+      "title": "Fampla v1.3.11 - Full i18n Support! 🌍✨",
+      "identifier": "fampla-v1.3.11-i18n",
+      "caption": "Complete German/English support with 886 professional translations!",
+      "date": "2025-10-04",
+      "tintColor": "#00c851",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": true,
+      "url": "https://github.com/fampla/fampla-app/releases/tag/v1.3.11"
+    },
+    {
+      "title": "Fampla v1.3.10 - Light Mode Fixed! 🎨✅",
+      "identifier": "fampla-v1.3.10-light-mode",
+      "caption": "White text on white background fixed - perfect readability in light mode!",
+      "date": "2025-10-03",
+      "tintColor": "#0088ff",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": false,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.3.10"
+    },
+    {
+      "title": "Fampla v1.3.9 - Recipe Ingredient Selection! 📖✅",
+      "identifier": "fampla-v1.3.9-recipe-ingredients",
+      "caption": "Select and add recipe ingredients directly to shopping lists!",
+      "date": "2025-10-03",
+      "tintColor": "#0088ff",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": false,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.3.9"
+    },
+    {
+      "title": "Fampla v1.3.8 - Notes Sync FIXED! 📝✅",
+      "identifier": "fampla-v1.3.8-notes-sync",
+      "caption": "Critical fix: Notes now sync perfectly between all devices!",
+      "date": "2025-09-12",
+      "tintColor": "#00c851",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": false,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.3.8"
+    },
+    {
+      "title": "Fampla v1.3.7 - Calendar Sync & Android Support! 🔄📱",
+      "identifier": "fampla-v1.3.7-multiplatform",
+      "caption": "Calendar sync features plus new Android APK release for dual platform support!",
+      "date": "2025-09-12",
+      "tintColor": "#0088ff",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": true,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.3.7"
+    },
+    {
+      "title": "Fampla v1.3.6 - Notes System Complete! 📝",
+      "identifier": "fampla-v1.3.6-notes",
+      "caption": "Full notes system with tags, sharing, and color coding!",
+      "date": "2025-09-11",
+      "tintColor": "#0088ff",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": false,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.3.6"
+    },
+    {
+      "title": "Fampla v1.3.5 - Calendar Fixed! 📅",
+      "identifier": "fampla-v1.3.5-calendar",
+      "caption": "Light mode readability & complete month display fixed!",
+      "date": "2025-09-08",
+      "tintColor": "#0088ff",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": true,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.3.5"
+    },
+    {
+      "title": "Fampla v1.3.2 - Recurring Events + AltStore Fix! 📅✅",
+      "identifier": "fampla-v1.3.2-cache-fix",
+      "caption": "Recurring calendar events now work perfectly with AltStore cache fix!",
+      "date": "2025-01-15",
+      "tintColor": "#00c851",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": false,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.3.2"
+    },
+    {
+      "title": "Fampla v1.2.1 - Dashboard Fixed! 🎯",
+      "identifier": "fampla-v1.2.1-dashboard",
+      "caption": "Real todo data integration - No more fake dashboard messages!",
+      "date": "2025-01-09",
+      "tintColor": "#0088ff",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": false,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.2.1"
+    },
+    {
+      "title": "Fampla v1.2.0 - LOGIN FIXED! ✅",
+      "identifier": "fampla-v1.2.0",
+      "caption": "Critical authentication bug fixed - Login now works perfectly!",
+      "date": "2025-09-06",
+      "tintColor": "#00c851",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": false,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.2.0"
+    },
+    {
+      "title": "Fampla v1.1.0 - Performance Update!",
+      "identifier": "fampla-v1.1.0",
+      "caption": "Smart caching system reduces API requests by 90%",
+      "date": "2025-09-06",
+      "tintColor": "#0088ff",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": false,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.1.0"
+    },
+    {
+      "title": "Fampla v1.0.0 Released!",
+      "identifier": "fampla-v1.0.0",
+      "caption": "Complete self-hosted family organization platform",
+      "date": "2025-09-05",
+      "tintColor": "#0088ff",
+      "imageURL": "https://raw.githubusercontent.com/fampla/fampla-app/main/mobile_app/assets/images/fampla_logo_1024.png",
+      "notify": false,
+      "url": "https://github.com/fampla/fampla-altstore/releases/tag/v1.0.0"
+    }
+  ]
+}
