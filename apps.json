@@ -25,6 +25,15 @@
       ],
       "versions": [
         {
+          "version": "1.4.27",
+          "date": "2025-11-25",
+          "localizedDescription": "🔧 REZEPT-IMPORT VOLLSTÄNDIG REPARIERT! 🐝\n\n✨ BASE URL BUG BEHOBEN:\n\n🐛 PROBLEM:\n• v1.4.26 Fix war unvollständig\n• RecipeProvider hatte leere Base URL\n• API-Aufrufe gingen ins Leere (\"No host specified\")\n\n🔧 ROOT CAUSE:\n• RecipeProvider.updateApiBaseUrl() war deprecated und tat NICHTS\n• Provider startete mit leerer URL und blieb leer\n• Self-Hosting Pattern nicht korrekt implementiert\n\n🛠️ LÖSUNG:\n• Gleiches Pattern wie FamilyShoppingProvider\n• updateApiBaseUrl() erstellt jetzt ApiClient neu\n• main.dart verwendet jetzt korrektes Provider-Update\n• Alle API-Services werden mit neuer URL neu erstellt\n\n✅ RESULTAT:\n• Rezept-Import funktioniert jetzt wirklich! ✅\n• Self-Hosting kompatibel wie andere Provider ✅\n• Keine \"Unbekannter Fehler\" mehr ✅\n• API-URLs korrekt für alle Requests ✅\n\nVersion: 1.4.27+61",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.27.ipa",
+          "size": 13000999,
+          "sha256": "d61f58bb9c557be7d85045aba3bce1f76094739ddfe8c384809f9abdab8d0377",
+          "minOSVersion": "12.0"
+        },
+        {
           "version": "1.4.26",
           "date": "2025-11-25",
           "localizedDescription": "🔧 REZEPT-IMPORT FIX! 🐝\n\n✨ KRITISCHER BUG BEHOBEN:\n\n🐛 OFFLINE REZEPTE STECKTEN FEST:\n• Problem: Rezept-Import zeigte \"Offline importiertes Rezept\"\n• Symptom: Rezepte blieben für immer offline, wurden nie synchronisiert\n• Root Cause: Sync Adapter hatte keinen Handler für 'import' Operation\n\n🔧 TECHNISCHE DETAILS:\n• recipe_sync_adapter.dart - 'import' case zur Switch-Statement hinzugefügt\n• Neue _syncImport() Methode implementiert\n• POST /recipes/import wird jetzt korrekt aufgerufen\n• Temp/offline Rezepte werden durch echte ersetzt\n\n✅ RESULTAT:\n• Rezept-Import funktioniert wieder! ✅\n• Importierte Rezepte werden synchronisiert ✅\n• Keine \"offline\" Rezepte mehr die hängen bleiben ✅\n\nVersion: 1.4.26+60",
