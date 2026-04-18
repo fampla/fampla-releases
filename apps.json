@@ -31,7 +31,16 @@
           "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.30.ipa",
           "size": 11080436,
           "sha256": "e4a7a4c888144ec2b299be5d8a5e84617c9f0e118bd72b2128e3ad720a93a826",
-          "minOSVersion": "12.0"
+          "minOSVersion": "12.0",
+          "androidAssets": [
+            {
+              "abi": "arm64-v8a",
+              "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla-v1.4.30-arm64-v8a.apk",
+              "size": 34821148,
+              "sha256": "542af3b10c4f844b6cb4f3969486d5712b7cd9226e7db6553293c7b7e2c6ad75",
+              "minSdkVersion": 23
+            }
+          ]
         },
         {
           "version": "1.4.29",
