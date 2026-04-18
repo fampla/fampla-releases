@@ -25,6 +25,15 @@
       ],
       "versions": [
         {
+          "version": "1.4.30",
+          "date": "2026-04-18",
+          "localizedDescription": "🎯 HABITS/ROUTINEN + MODERNE BASIS! 🐝\n\n✨ NEUE FEATURES:\n\n🎯 HABITS & ROUTINEN:\n• Neues Tracking für Gewohnheiten und Familien-Routinen\n• Streak-Zähler für durchgezogene Tage\n• Immutable Postgres-Funktion für zuverlässige Unique-Indices\n\n🏠 LANDING + PRIVACY HTTPS:\n• fampla.famhoff.com/ mit Download-Buttons für alle Kanäle\n• /privacy und /terms als gehostete HTML-Seiten\n\n🔄 IN-APP UPDATE-CHECK:\n• Sideload-Installs (AltStore, Direkt-APK) bekommen einen\n  MaterialBanner wenn auf dem Forgejo-Release eine neuere Version\n  verfügbar ist. Play/F-Droid-Installs werden übersprungen.\n\n🛠️ WEB-INSTALLER:\n• Erste Server-Einrichtung jetzt browserbasiert\n• 44 neue Tests für den Install-Flow\n\n🎨 LOGO & UI:\n• Neues Logo (Kalender/Family-Design) auf allen Plattformen\n• Weiße-Hintergrund-Variante für Light-Mode-Platzierungen\n\n🧹 REFACTORING & FIXES:\n• FoodDatabase als zentrale Quelle für Food-Keywords\n• Calendar-Screen: toten Code entfernt, Struktur konsolidiert\n• 4 UI-Bugs gefixt: Zutaten-Button, Rezept-Kategorien, Todos,\n  Calendar-Dates\n\n🔧 TECHNISCHE BASIS:\n• Android Release-Signing aufgesetzt (Upload-Keystore)\n• Forgejo-Actions Release-Workflow für signierte APKs\n• Native Verzeichnisse (mobile_app/android, mobile_app/ios)\n  endlich korrekt in Git — vorher via .gitignore versehentlich\n  ausgeblendet\n\nVersion: 1.4.30+64",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.30.ipa",
+          "size": 11080436,
+          "sha256": "e4a7a4c888144ec2b299be5d8a5e84617c9f0e118bd72b2128e3ad720a93a826",
+          "minOSVersion": "12.0"
+        },
+        {
           "version": "1.4.29",
           "date": "2026-01-04",
           "localizedDescription": "🎨 MODERNES UI DESIGN + EINHEITLICHES BLAU-FARBSCHEMA! 🐝\n\n✨ DESIGN OVERHAUL:\n\n🎨 EINHEITLICHES FARBSCHEMA:\n• Logo und App-Icons auf Ocean Blue (#1E3A8A) aktualisiert\n• Light Mode: Ocean Blue als Primärfarbe\n• Dark Mode: Bright Blue (#3B82F6) für bessere Sichtbarkeit\n• Konsistentes Blau in beiden Modi statt Grün/Blau Mix\n• Slate-Hintergründe mit blauem Unterton im Dark Mode\n\n🖥️ MODERNE NAVIGATION:\n• Sauberer iOS/Android-Style Bottom Bar\n• Klare Icons (24px) mit kleinen Labels (10px)\n• Dezente Farben für nicht-aktive Items\n• Primärfarbe für aktives Item\n\n🔧 TECHNISCHE VERBESSERUNGEN:\n• Secure Storage Error Handling verbessert\n• Login funktioniert auch bei Storage-Problemen\n• Modernisierte Screens: Dashboard, Kalender, Todos, Shopping, Rezepte\n• Glass Card und Sunny Widgets aktualisiert\n\n✅ RESULTAT:\n• Professionelles, einheitliches Design ✅\n• Konsistent mit blauem Logo ✅\n• Bessere Lesbarkeit in beiden Modi ✅\n• Moderne UI wie iOS/Android Apps ✅\n\nVersion: 1.4.29+63",
