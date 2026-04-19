@@ -25,6 +25,15 @@
       ],
       "versions": [
         {
+          "version": "1.4.35",
+          "date": "2026-04-19",
+          "localizedDescription": "🍎 iOS 26 ICON — JETZT ZENTRIERT\n\n• Kalender-Motiv sitzt jetzt bündig im Zentrum des Icon-Canvas\n  (war in 1.4.34 noch ~16% nach rechts verschoben).\n\n• Light/Dark/Tinted-Appearances von 1.4.34 bleiben erhalten.\n\nVersion: 1.4.35+69",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.35.ipa",
+          "size": 13245989,
+          "sha256": "5f776f664526e20ec43dde91b0a047aad23ca7b06a5d67f2876389728aec5257",
+          "minOSVersion": "12.0"
+        },
+        {
           "version": "1.4.34",
           "date": "2026-04-19",
           "localizedDescription": "🍎 iOS 26 ADAPTIVE ICON (FIX)\n\n• App-Icon rendert jetzt sauber im Hell-, Dunkel- und Tinted-Modus\n  (vorheriger Push hat noch das alte flache Icon ausgeliefert — das\n  per-size appiconset-Format hat die Dark-Appearance-Metadaten\n  stillschweigend verworfen).\n\n• Migration auf das iOS-18+ Single-1024-Format:\n  - Light  → Cream-Verlauf (Any)\n  - Dark   → Indigo-Verlauf (Dark)\n  - Tinted → auto-monochrome aus Dark-Variante\n\n• Motiv bündig und zentriert zum iOS-Icon-Raster.\n\nVersion: 1.4.34+68",
