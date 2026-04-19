@@ -25,6 +25,24 @@
       ],
       "versions": [
         {
+          "version": "1.4.37",
+          "date": "2026-04-19",
+          "localizedDescription": "🌍 AUTOMATISCHE REZEPT-ÜBERSETZUNG\n\n• Fremdsprachige Rezepte werden beim Import automatisch\n  ins Deutsche übersetzt (Zutaten + Zubereitung).\n  Der Rezeptname bleibt im Original — \"French Onion Butter\n  Beans\" bleibt \"French Onion Butter Beans\".\n\n• Im Rezept erscheint ein Banner \"Übersetzt aus Englisch —\n  Tippen für Original\". Ein Klick zeigt die ursprünglichen\n  Zutaten und Schritte, falls die Übersetzung mal unglücklich\n  ausfällt.\n\n• Unterstützt: Englisch, Französisch, Italienisch, Spanisch,\n  Niederländisch → Deutsch.\n\n• Läuft komplett self-hosted über eine eigene LibreTranslate-\n  Instanz — keine Daten gehen an externe Dienste.\n\nVersion: 1.4.37+71",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.37.ipa",
+          "size": 12702066,
+          "sha256": "bdbaa75cfd359beba7385200c4f5e4208c0b19b97da240f531941feca52385b3",
+          "minOSVersion": "12.0",
+          "androidAssets": [
+            {
+              "abi": "arm64-v8a",
+              "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla-v1.4.37-arm64-v8a.apk",
+              "size": 34893288,
+              "sha256": "055931daff42bfe67897629705904506c80ade730d8a415dadd2c050ae5a47bc",
+              "minSdkVersion": 23
+            }
+          ]
+        },
+        {
           "version": "1.4.36",
           "date": "2026-04-19",
           "localizedDescription": "🍎 ICON — KALENDER-PAPIER TRANSPARENT\n\n• Weiße Innenfläche des Kalenders ist jetzt transparent —\n  der Hintergrund-Verlauf scheint durch. Dadurch passt sich\n  das Icon noch besser an den Home-Screen an:\n\n  - Light-Mode: cremefarbenes Papier\n  - Dark-Mode:  indigoblaues Papier\n  - Tinted:     übernimmt den System-Tint\n\n• Motiv bleibt zentriert wie in 1.4.35.\n\nVersion: 1.4.36+70",
