@@ -25,12 +25,12 @@
       ],
       "versions": [
         {
-          "version": "1.4.33",
+          "version": "1.4.34",
           "date": "2026-04-19",
-          "localizedDescription": "🍎 iOS 26 ADAPTIVE ICON\n\n• App-Icon rendert jetzt sauber im Hell- und Dunkelmodus:\n  Auf Home-Screens mit dunklem Hintergrund greift automatisch die Dark-Variante (indigo-Verlauf), im Light-Mode bleibt der bekannte Cream-Verlauf.\n\n• Motiv ist wieder bündig zum iOS-Icon-Raster zentriert und füllt die Fläche korrekt aus.\n\n• Tinted-Mode fällt kontrolliert auf die Dark-Variante zurück und kombiniert sich mit der vom Nutzer gewählten Akzentfarbe.\n\nVersion: 1.4.33+67",
-          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.33.ipa",
+          "localizedDescription": "🍎 iOS 26 ADAPTIVE ICON (FIX)\n\n• App-Icon rendert jetzt sauber im Hell-, Dunkel- und Tinted-Modus\n  (vorheriger Push hat noch das alte flache Icon ausgeliefert — das\n  per-size appiconset-Format hat die Dark-Appearance-Metadaten\n  stillschweigend verworfen).\n\n• Migration auf das iOS-18+ Single-1024-Format:\n  - Light  → Cream-Verlauf (Any)\n  - Dark   → Indigo-Verlauf (Dark)\n  - Tinted → auto-monochrome aus Dark-Variante\n\n• Motiv bündig und zentriert zum iOS-Icon-Raster.\n\nVersion: 1.4.34+68",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.34.ipa",
           "size": 12111064,
-          "sha256": "d4ba66c46f21ff6a60eb951f041204abdaca36618041e4366af99166db3c2798",
+          "sha256": "70f36c220f9d6bedb46656177120e44db7cedbc166d264bc4368274f68168533",
           "minOSVersion": "12.0"
         },
         {
