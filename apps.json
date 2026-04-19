@@ -25,6 +25,15 @@
       ],
       "versions": [
         {
+          "version": "1.4.32",
+          "date": "2026-04-19",
+          "localizedDescription": "🎨 NEUES APP-ICON + REZEPT-BILD-FIX\n\n• iOS/Android-Launcher-Icon komplett überarbeitet:\n  Kalender+Familie-Motiv füllt jetzt die ganze Icon-Fläche statt in weißem Rand zu schwimmen. Auf dem Homescreen wieder erkennbar und klickbar.\n\n• Rezept-Import: Cover-Bild-Fallback bevorzugt jetzt og:image statt zufälligem Sidebar-Teaser — betrifft Seiten ohne JSON-LD Recipe-Schema.\n\nVersion: 1.4.32+66",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.32.ipa",
+          "size": 11403116,
+          "sha256": "e51c6acb41a97eee49de127d241b90cf79669ece4f1357fa127192b8a9677461",
+          "minOSVersion": "12.0"
+        },
+        {
           "version": "1.4.31",
           "date": "2026-04-19",
           "localizedDescription": "🔐 NIE WIEDER EINLOGGEN! 🐝\n\n✨ AUTH-OVERHAUL:\n\n🔑 LANGLEBIGE SESSIONS:\n• Access-Token läuft jetzt 30 Tage statt 1 Stunde\n• Refresh-Token gilt 365 Tage statt 30\n• Refresh-Token-Rotation: Aktive Nutzer bleiben dauerhaft eingeloggt\n• Keine nervigen Neuanmeldungen mehr bei Netzproblemen\n\n🌐 CLOUDFLARE-PROOF REZEPT-IMPORT:\n• Backend probiert Safari-UA zuerst (WordPress-Sites hinter\n  Cloudflare blocken Chrome-UA wegen TLS-Fingerprint-Mismatch)\n• Bilder werden über dieselbe Fallback-Kette geladen\n• bytheforkful.com & ähnliche Seiten importieren jetzt sauber\n\n🏗️ CODE-GESUNDHEIT:\n• 1591-LOC recipeRoutes.js aufgesplittet in 7 fokussierte Module\n• .gitignore-Bug gefixt — native android/ios-Dirs jetzt in Git\n• CI-Pipeline auf Forgejo-Actions repariert\n\n🎯 UX-POLITUR:\n• Landing-Page fampla.famhoff.com mit Download-Buttons\n• Privacy- und Terms-Seiten als echte HTTPS-Routen\n• In-App-Update-Check fragt jetzt direkt die AltStore-Feed ab\n  (kein Phone-Home zu einem Zentral-Server)\n\nVersion: 1.4.31+65",
