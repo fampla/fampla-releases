@@ -25,6 +25,15 @@
       ],
       "versions": [
         {
+          "version": "1.4.33",
+          "date": "2026-04-19",
+          "localizedDescription": "🍎 iOS 26 ADAPTIVE ICON\n\n• App-Icon rendert jetzt sauber im Hell- und Dunkelmodus:\n  Auf Home-Screens mit dunklem Hintergrund greift automatisch die Dark-Variante (indigo-Verlauf), im Light-Mode bleibt der bekannte Cream-Verlauf.\n\n• Motiv ist wieder bündig zum iOS-Icon-Raster zentriert und füllt die Fläche korrekt aus.\n\n• Tinted-Mode fällt kontrolliert auf die Dark-Variante zurück und kombiniert sich mit der vom Nutzer gewählten Akzentfarbe.\n\nVersion: 1.4.33+67",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.33.ipa",
+          "size": 11191221,
+          "sha256": "0628e8bcd14a2c5a4e8a8b3adae607e2ab2fee2043db83d501814c4c7ff45c28",
+          "minOSVersion": "12.0"
+        },
+        {
           "version": "1.4.32",
           "date": "2026-04-19",
           "localizedDescription": "🎨 NEUES APP-ICON + REZEPT-BILD-FIX\n\n• iOS/Android-Launcher-Icon komplett überarbeitet:\n  Kalender+Familie-Motiv füllt jetzt die ganze Icon-Fläche statt in weißem Rand zu schwimmen. Auf dem Homescreen wieder erkennbar und klickbar.\n\n• Rezept-Import: Cover-Bild-Fallback bevorzugt jetzt og:image statt zufälligem Sidebar-Teaser — betrifft Seiten ohne JSON-LD Recipe-Schema.\n\nVersion: 1.4.32+66",
