@@ -25,6 +25,24 @@
       ],
       "versions": [
         {
+          "version": "1.4.31",
+          "date": "2026-04-19",
+          "localizedDescription": "🔐 NIE WIEDER EINLOGGEN! 🐝\n\n✨ AUTH-OVERHAUL:\n\n🔑 LANGLEBIGE SESSIONS:\n• Access-Token läuft jetzt 30 Tage statt 1 Stunde\n• Refresh-Token gilt 365 Tage statt 30\n• Refresh-Token-Rotation: Aktive Nutzer bleiben dauerhaft eingeloggt\n• Keine nervigen Neuanmeldungen mehr bei Netzproblemen\n\n🌐 CLOUDFLARE-PROOF REZEPT-IMPORT:\n• Backend probiert Safari-UA zuerst (WordPress-Sites hinter\n  Cloudflare blocken Chrome-UA wegen TLS-Fingerprint-Mismatch)\n• Bilder werden über dieselbe Fallback-Kette geladen\n• bytheforkful.com & ähnliche Seiten importieren jetzt sauber\n\n🏗️ CODE-GESUNDHEIT:\n• 1591-LOC recipeRoutes.js aufgesplittet in 7 fokussierte Module\n• .gitignore-Bug gefixt — native android/ios-Dirs jetzt in Git\n• CI-Pipeline auf Forgejo-Actions repariert\n\n🎯 UX-POLITUR:\n• Landing-Page fampla.famhoff.com mit Download-Buttons\n• Privacy- und Terms-Seiten als echte HTTPS-Routen\n• In-App-Update-Check fragt jetzt direkt die AltStore-Feed ab\n  (kein Phone-Home zu einem Zentral-Server)\n\nVersion: 1.4.31+65",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.31.ipa",
+          "size": 11066815,
+          "sha256": "506239b2cffa9a41d8faae8d438139281f289e10ca05f3e58c36dc678205a426",
+          "minOSVersion": "12.0",
+          "androidAssets": [
+            {
+              "abi": "arm64-v8a",
+              "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla-v1.4.31-arm64-v8a.apk",
+              "size": 34821148,
+              "sha256": "da34b1e562dec2cd11140b35398c43bf561bd151cc39094b07de212212ab8322",
+              "minSdkVersion": 23
+            }
+          ]
+        },
+        {
           "version": "1.4.30",
           "date": "2026-04-18",
           "localizedDescription": "🎯 HABITS/ROUTINEN + MODERNE BASIS! 🐝\n\n✨ NEUE FEATURES:\n\n🎯 HABITS & ROUTINEN:\n• Neues Tracking für Gewohnheiten und Familien-Routinen\n• Streak-Zähler für durchgezogene Tage\n• Immutable Postgres-Funktion für zuverlässige Unique-Indices\n\n🏠 LANDING + PRIVACY HTTPS:\n• fampla.famhoff.com/ mit Download-Buttons für alle Kanäle\n• /privacy und /terms als gehostete HTML-Seiten\n\n🔄 IN-APP UPDATE-CHECK:\n• Sideload-Installs (AltStore, Direkt-APK) bekommen einen\n  MaterialBanner wenn auf dem Forgejo-Release eine neuere Version\n  verfügbar ist. Play/F-Droid-Installs werden übersprungen.\n\n🛠️ WEB-INSTALLER:\n• Erste Server-Einrichtung jetzt browserbasiert\n• 44 neue Tests für den Install-Flow\n\n🎨 LOGO & UI:\n• Neues Logo (Kalender/Family-Design) auf allen Plattformen\n• Weiße-Hintergrund-Variante für Light-Mode-Platzierungen\n\n🧹 REFACTORING & FIXES:\n• FoodDatabase als zentrale Quelle für Food-Keywords\n• Calendar-Screen: toten Code entfernt, Struktur konsolidiert\n• 4 UI-Bugs gefixt: Zutaten-Button, Rezept-Kategorien, Todos,\n  Calendar-Dates\n\n🔧 TECHNISCHE BASIS:\n• Android Release-Signing aufgesetzt (Upload-Keystore)\n• Forgejo-Actions Release-Workflow für signierte APKs\n• Native Verzeichnisse (mobile_app/android, mobile_app/ios)\n  endlich korrekt in Git — vorher via .gitignore versehentlich\n  ausgeblendet\n\nVersion: 1.4.30+64",
