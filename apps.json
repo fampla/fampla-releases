@@ -25,6 +25,24 @@
       ],
       "versions": [
         {
+          "version": "1.4.38",
+          "date": "2026-04-19",
+          "localizedDescription": "📲 ANDROID: IN-APP SELF-UPDATE\n\n• Wenn eine neue Version verfügbar ist, kann Fampla sich\n  jetzt direkt in der App updaten: Banner → \"Installieren\"\n  → kurzer Download mit Fortschrittsanzeige → System-Prompt\n  → fertig. Kein manueller Browser-Download + APK-Suche mehr.\n\n• Erfordert einmalig die Android-Berechtigung \"Apps aus\n  dieser Quelle installieren\" (System fragt automatisch).\n\n• iOS nutzt weiterhin AltStore für Updates — dort erscheint\n  kein Banner.\n\nVersion: 1.4.38+72",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.38.ipa",
+          "size": 12711661,
+          "sha256": "55c403adafb04911f3f738ce4b19b6f96adfd44501547ef61028bef7fe8ddc63",
+          "minOSVersion": "12.0",
+          "androidAssets": [
+            {
+              "abi": "arm64-v8a",
+              "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla-v1.4.38-arm64-v8a.apk",
+              "size": 34894220,
+              "sha256": "17a1db4628db32b78e26bcc68b92d54ce7dd16345369bc201ee5a981f4ce5e6e",
+              "minSdkVersion": 23
+            }
+          ]
+        },
+        {
           "version": "1.4.37",
           "date": "2026-04-19",
           "localizedDescription": "🌍 AUTOMATISCHE REZEPT-ÜBERSETZUNG\n\n• Fremdsprachige Rezepte werden beim Import automatisch\n  ins Deutsche übersetzt (Zutaten + Zubereitung).\n  Der Rezeptname bleibt im Original — \"French Onion Butter\n  Beans\" bleibt \"French Onion Butter Beans\".\n\n• Im Rezept erscheint ein Banner \"Übersetzt aus Englisch —\n  Tippen für Original\". Ein Klick zeigt die ursprünglichen\n  Zutaten und Schritte, falls die Übersetzung mal unglücklich\n  ausfällt.\n\n• Unterstützt: Englisch, Französisch, Italienisch, Spanisch,\n  Niederländisch → Deutsch.\n\n• Läuft komplett self-hosted über eine eigene LibreTranslate-\n  Instanz — keine Daten gehen an externe Dienste.\n\nVersion: 1.4.37+71",
