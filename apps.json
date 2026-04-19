@@ -25,6 +25,15 @@
       ],
       "versions": [
         {
+          "version": "1.4.36",
+          "date": "2026-04-19",
+          "localizedDescription": "🍎 ICON — KALENDER-PAPIER TRANSPARENT\n\n• Weiße Innenfläche des Kalenders ist jetzt transparent —\n  der Hintergrund-Verlauf scheint durch. Dadurch passt sich\n  das Icon noch besser an den Home-Screen an:\n\n  - Light-Mode: cremefarbenes Papier\n  - Dark-Mode:  indigoblaues Papier\n  - Tinted:     übernimmt den System-Tint\n\n• Motiv bleibt zentriert wie in 1.4.35.\n\nVersion: 1.4.36+70",
+          "downloadURL": "https://github.com/fampla/fampla-altstore/raw/main/Fampla_v1.4.36.ipa",
+          "size": 12696508,
+          "sha256": "9e9e757647a17a63088b74effe054b3f5512d29732fd1643a89448d57cd0cd50",
+          "minOSVersion": "12.0"
+        },
+        {
           "version": "1.4.35",
           "date": "2026-04-19",
           "localizedDescription": "🍎 iOS 26 ICON — JETZT ZENTRIERT\n\n• Kalender-Motiv sitzt jetzt bündig im Zentrum des Icon-Canvas\n  (war in 1.4.34 noch ~16% nach rechts verschoben).\n\n• Light/Dark/Tinted-Appearances von 1.4.34 bleiben erhalten.\n\nVersion: 1.4.35+69",
