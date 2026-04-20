@@ -6,7 +6,7 @@ This repository contains only the files necessary for AltStore installation of F
 
 Add this repository to AltStore:
 ```
-https://raw.githubusercontent.com/fampla/fampla-altstore/main/apps.json
+https://raw.githubusercontent.com/fampla/fampla-releases/main/apps.json
 ```
 
 ## Files
