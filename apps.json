@@ -25,6 +25,25 @@
       ],
       "versions": [
         {
+          "version": "1.4.40",
+          "buildVersion": "74",
+          "date": "2026-04-21",
+          "size": 12715807,
+          "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla_v1.4.40.ipa",
+          "localizedDescription": "v1.4.40 — Unified Sync Refactor (rebuild)\n\n• Fixes the Shopping bug where deleted items kept reappearing\n• All features (Shopping, Calendar, Notes, Todos, Recipes) now share one offline-sync merge algorithm\n• Self-healing: stale zombie items get purged on first launch\n• DELETE operations no longer loop on 404 retries",
+          "minOSVersion": "12.0",
+          "sha256": "5a1e14f736ab8eabda31db0cc409be720fca00c374da0b2d048169ab8fa33e40",
+          "androidAssets": [
+            {
+              "abi": "arm64-v8a",
+              "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla-v1.4.38-arm64-v8a.apk",
+              "size": 34894220,
+              "sha256": "17a1db4628db32b78e26bcc68b92d54ce7dd16345369bc201ee5a981f4ce5e6e",
+              "minSdkVersion": 23
+            }
+          ]
+        },
+        {
           "version": "1.4.39",
           "buildVersion": "73",
           "date": "2026-04-21",
@@ -689,9 +708,9 @@
           }
         ]
       },
-      "version": "1.4.39",
+      "version": "1.4.40",
       "versionDate": "2026-04-21",
-      "size": 12715806
+      "size": 12715807
     }
   ],
   "news": [
