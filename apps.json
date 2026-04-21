@@ -32,7 +32,7 @@
           "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla_v1.4.39.ipa",
           "localizedDescription": "v1.4.39 — Unified Sync Refactor\n\n• Fixes the Shopping bug where deleted items kept reappearing\n• All features (Shopping, Calendar, Notes, Todos, Recipes) now share one offline-sync merge algorithm — fewer edge cases, less divergence between devices\n• Self-healing: stale zombie items get purged on first launch, pending offline-created items survive\n• DELETE operations no longer loop on 404 retries",
           "minOSVersion": "12.0",
-          "sha256": "55c403adafb04911f3f738ce4b19b6f96adfd44501547ef61028bef7fe8ddc63",
+          "sha256": "eaba8e02d4a26e165d6a8e8fac5f4404cab07d3c59f51c8852ce17d02b51c346",
           "androidAssets": [
             {
               "abi": "arm64-v8a",
