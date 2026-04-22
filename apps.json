@@ -25,6 +25,24 @@
       ],
       "versions": [
         {
+          "version": "1.4.42",
+          "date": "2026-04-22",
+          "localizedDescription": "🛡️ SYNC-POLITUR\n\n• Sync-Status-Screen zeigt jetzt sowohl fehlgeschlagene\n  ALS AUCH wartende Operationen. Einstellungen → Features → Sync-Status.\n\n• Idempotency-Keys auch für Notizen + To-Dos (vorher nur\n  Rezepte) — keine Doppel-Einträge mehr wenn ein POST durchkam\n  aber die Antwort verloren ging.\n\n• Settings-Tile mit 3-Farben-Status: grün (alles gut),\n  amber (wird synchronisiert), rot (Operationen hängen fest).\n\nVersion: 1.4.42+76",
+          "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla_v1.4.42.ipa",
+          "size": 12726832,
+          "sha256": "9e4cf2f34ea315200aae104edc1401a19497cd8b8cfab24ab913008619193120",
+          "minOSVersion": "12.0",
+          "androidAssets": [
+            {
+              "abi": "arm64-v8a",
+              "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla-v1.4.42-arm64-v8a.apk",
+              "size": 34894496,
+              "sha256": "aa99adb2c3e3b5796f3e9aeaccd2c2df2ba4b5fd71d5c917fb27c4a865511f5d",
+              "minSdkVersion": 23
+            }
+          ]
+        },
+        {
           "version": "1.4.41",
           "date": "2026-04-22",
           "localizedDescription": "🛡️ ZUVERLÄSSIGER SYNC\n\n• Sync-Status-Screen (Einstellungen → Features → Sync-Status):\n  Zeigt Operationen an, die nach mehreren Versuchen nicht zum\n  Server übertragen werden konnten. Pro Eintrag: \"Erneut\n  versuchen\" oder \"Verwerfen\". Nichts verschwindet mehr\n  stillschweigend.\n\n• Idempotency-Keys: Bei wackeliger Verbindung erstellt die App\n  keine doppelten Rezepte mehr, wenn ein POST zwar ankam aber\n  die Antwort verloren ging. Retry liefert das identische\n  Ergebnis statt ein zweites Rezept.\n\n• Backend läuft auf offiziellem PostgreSQL-Image statt custom\n  build — leichter zu warten, weniger Überraschungen.\n\nVersion: 1.4.41+75",
