@@ -25,6 +25,24 @@
       ],
       "versions": [
         {
+          "version": "1.4.41",
+          "date": "2026-04-22",
+          "localizedDescription": "🛡️ ZUVERLÄSSIGER SYNC\n\n• Sync-Status-Screen (Einstellungen → Features → Sync-Status):\n  Zeigt Operationen an, die nach mehreren Versuchen nicht zum\n  Server übertragen werden konnten. Pro Eintrag: \"Erneut\n  versuchen\" oder \"Verwerfen\". Nichts verschwindet mehr\n  stillschweigend.\n\n• Idempotency-Keys: Bei wackeliger Verbindung erstellt die App\n  keine doppelten Rezepte mehr, wenn ein POST zwar ankam aber\n  die Antwort verloren ging. Retry liefert das identische\n  Ergebnis statt ein zweites Rezept.\n\n• Backend läuft auf offiziellem PostgreSQL-Image statt custom\n  build — leichter zu warten, weniger Überraschungen.\n\nVersion: 1.4.41+75",
+          "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla_v1.4.41.ipa",
+          "size": 12730314,
+          "sha256": "a733dee21b0d9119c96f988ae003a740f9a8e3b2d436aa81beeac2e7595194e7",
+          "minOSVersion": "12.0",
+          "androidAssets": [
+            {
+              "abi": "arm64-v8a",
+              "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla-v1.4.41-arm64-v8a.apk",
+              "size": 34894380,
+              "sha256": "9baf8781d1c3417e1dc89c8cf5626f339a4e12807a0562ee4495cd17a4ae1bd0",
+              "minSdkVersion": 23
+            }
+          ]
+        },
+        {
           "version": "1.4.40",
           "buildVersion": "74",
           "date": "2026-04-21",
