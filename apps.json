@@ -25,6 +25,15 @@
       ],
       "versions": [
         {
+          "version": "1.4.43",
+          "date": "2026-04-24",
+          "localizedDescription": "🔄 SYNC-KONSOLIDIERUNG\n\n• Gewohnheiten synchronisieren jetzt zuverlässig offline.\n  Bisheriger Bug: Wenn du offline einen Habit abgehakt hast,\n  wurde er nach Rückkehr online stumm verworfen statt zum\n  Server geschickt. Jetzt landet jede Offline-Aktion\n  (abhaken, rückgängig, erstellen, bearbeiten, löschen,\n  archivieren) in derselben Queue wie Notizen/Todos/Rezepte\n  und wird abgearbeitet sobald wieder Verbindung da ist.\n\n• Einkaufslisten laufen jetzt über dieselbe Sync-Infrastruktur\n  wie alle anderen Bereiche. Vorher eigenes Parallelsystem —\n  doppelte Queue, doppelter Retry-Pfad, eigene DB-Datei.\n  Jetzt: ein Pfad, eine Status-Anzeige, ein Dead-Letter-Queue.\n\n• Unter der Haube: ~1000 Zeilen Sync-Code entfernt. Ein\n  gemeinsames Retry/Backoff-System für alle Entities.\n  Weniger Fehlerquellen, leichter zu pflegen.\n\nVersion: 1.4.43+77",
+          "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla_v1.4.43.ipa",
+          "size": 12816127,
+          "sha256": "54ec8055c88da6fd679a3c028d823e0a3c9ae84842d4b2cc2d04b1068026ad45",
+          "minOSVersion": "12.0"
+        },
+        {
           "version": "1.4.42",
           "date": "2026-04-22",
           "localizedDescription": "🛡️ SYNC-POLITUR\n\n• Sync-Status-Screen zeigt jetzt sowohl fehlgeschlagene\n  ALS AUCH wartende Operationen. Einstellungen → Features → Sync-Status.\n\n• Idempotency-Keys auch für Notizen + To-Dos (vorher nur\n  Rezepte) — keine Doppel-Einträge mehr wenn ein POST durchkam\n  aber die Antwort verloren ging.\n\n• Settings-Tile mit 3-Farben-Status: grün (alles gut),\n  amber (wird synchronisiert), rot (Operationen hängen fest).\n\nVersion: 1.4.42+76",
