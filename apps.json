@@ -25,6 +25,15 @@
       ],
       "versions": [
         {
+          "version": "1.5.0",
+          "date": "2026-05-01",
+          "localizedDescription": "🎯 OFFLINE-FIRST + PRIVACY SWEEP\n\nDer Häkchen-im-Supermarkt-Bug ist endlich weg. Plus: alle 6 Bereiche sind jetzt konsequent offline-first.\n\n📱 WAS SICH ÄNDERT:\n\n• Im Supermarkt ohne Empfang Häkchen setzen — sie überleben jetzt App-Killen, Connectivity-Hiccups und Pull-Refresh. Egal in welcher Reihenfolge das passiert.\n\n• Notizen gleichzeitig bearbeiten (du im Zug, Frau zu Hause): bei unterschiedlichen Feldern bleiben beide Änderungen erhalten. Bei Konflikt am gleichen Feld gewinnt der spätere Timestamp — keine Änderung wird mehr stumm komplett verworfen.\n\n• Calendar, Todos, Habits, Rezepte: alle nutzen jetzt denselben sicheren Sync-Mechanismus.\n\n🔧 UNTER DER HAUBE:\n\n• Eine einzige Outbox für alle Bereiche, mit Idempotency-Keys gegen Doppel-Inserts.\n\n• Per-field Last-Write-Wins mit Dirty-Flag-Schutz: lokale Änderungen mit offener Sync-Operation sind immutable für eingehende Server-Daten.\n\n• Shopping-DB konsolidiert (war auf zwei separaten SQLite-Dateien verteilt — jetzt eine).\n\n• 6 domain-spezifische E2E-Tests sichern, dass der Bug nicht zurückkommt.\n\n⚠️ HINWEIS:\n\nBackend-Welle-1-Endpoints müssen aktiv sein. Falls Server noch nicht aktualisiert: App läuft, aber Sync-Nachholung wartet.\n\nVersion: 1.5.0+78",
+          "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla_v1.5.0.ipa",
+          "size": 12842621,
+          "sha256": "e50675eedc4c7a0d57d0a11ef6ad8961fedc608a3d0475e0c0799202f9b929a9",
+          "minOSVersion": "12.0"
+        },
+        {
           "version": "1.4.43",
           "date": "2026-04-24",
           "localizedDescription": "🔄 SYNC-KONSOLIDIERUNG\n\n• Gewohnheiten synchronisieren jetzt zuverlässig offline.\n  Bisheriger Bug: Wenn du offline einen Habit abgehakt hast,\n  wurde er nach Rückkehr online stumm verworfen statt zum\n  Server geschickt. Jetzt landet jede Offline-Aktion\n  (abhaken, rückgängig, erstellen, bearbeiten, löschen,\n  archivieren) in derselben Queue wie Notizen/Todos/Rezepte\n  und wird abgearbeitet sobald wieder Verbindung da ist.\n\n• Einkaufslisten laufen jetzt über dieselbe Sync-Infrastruktur\n  wie alle anderen Bereiche. Vorher eigenes Parallelsystem —\n  doppelte Queue, doppelter Retry-Pfad, eigene DB-Datei.\n  Jetzt: ein Pfad, eine Status-Anzeige, ein Dead-Letter-Queue.\n\n• Unter der Haube: ~1000 Zeilen Sync-Code entfernt. Ein\n  gemeinsames Retry/Backoff-System für alle Entities.\n  Weniger Fehlerquellen, leichter zu pflegen.\n\nVersion: 1.4.43+77",
