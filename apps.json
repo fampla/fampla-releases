@@ -25,6 +25,24 @@
       ],
       "versions": [
         {
+          "version": "2.0.0",
+          "date": "2026-05-02",
+          "localizedDescription": "🐝 SYNC-FIX FÜR EINKAUFSLISTE\n\nDer Bug mit hängenden Einkaufslisten-Änderungen ist weg.\n\n📱 WAS SICH ÄNDERT:\n\n• Einkaufsliste synchronisiert wieder zuverlässig. Wer in v1.5.0 Änderungen gemacht hat, die in „X ausstehende Änderungen\" hängen geblieben sind: einmal Pull-to-Refresh auf der Einkaufsliste — und sie sind weg.\n\n• Pull-to-Refresh ignoriert jetzt das Backoff-Fenster. Wenn du aktiv „jetzt syncen\" sagst, wird auch jetzt synct — nicht erst in 30 Minuten.\n\n• Retry-Wartezeit max. 5 Minuten statt 30. Dein Heimserver verdient keine Geduld wie ein dauerhaft überlasteter Cloud-Service.\n\n🔧 UNTER DER HAUBE:\n\nIn v1.5.0 wurde der Shopping-Outbox-Adapter zentral in main.dart registriert — leider mit leerer Server-URL und ohne Auth-Token. Folge: jeder Sync-Versuch lief gegen einen ungültigen Endpoint, das System markierte ihn als „nochmal probieren später\", die Wartezeit verdoppelte sich bei jedem Versuch bis zur 30-Minuten-Obergrenze. Symptom: 11 Änderungen blieben „ausstehend\" hängen.\n\nDie 5 anderen Bereiche (Notizen, Kalender, Todos, Habits, Rezepte) haben Adapter-Registrierung schon richtig — direkt im jeweiligen Provider mit echtem Auth + URL. v2.0.0 zieht Shopping in dasselbe Pattern. Ab jetzt: ein Mechanismus für alle 6 Bereiche, klar dokumentiert, leichter zu debuggen.\n\nKeine Backend-Änderungen nötig.\n\nVersion: 2.0.0+80",
+          "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla_v2.0.0.ipa",
+          "size": 12842940,
+          "sha256": "b14c1d8e026de71ff8e751bf26c9f6c78d99fa5bc8284cdae86c03e2d00d9d4e",
+          "minOSVersion": "12.0",
+          "androidAssets": [
+            {
+              "abi": "arm64-v8a",
+              "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla-v2.0.0-arm64-v8a.apk",
+              "size": 34985100,
+              "sha256": "f65b4bb9007a9785f789896a5d7d9576ae1bf8c16e74fd0e6c69e8ddb8c5eb83",
+              "minSdkVersion": 23
+            }
+          ]
+        },
+        {
           "version": "1.5.0",
           "date": "2026-05-01",
           "localizedDescription": "🎯 OFFLINE-FIRST + PRIVACY SWEEP\n\nDer Häkchen-im-Supermarkt-Bug ist endlich weg. Plus: alle 6 Bereiche sind jetzt konsequent offline-first.\n\n📱 WAS SICH ÄNDERT:\n\n• Im Supermarkt ohne Empfang Häkchen setzen — sie überleben jetzt App-Killen, Connectivity-Hiccups und Pull-Refresh. Egal in welcher Reihenfolge das passiert.\n\n• Notizen gleichzeitig bearbeiten (du im Zug, Frau zu Hause): bei unterschiedlichen Feldern bleiben beide Änderungen erhalten. Bei Konflikt am gleichen Feld gewinnt der spätere Timestamp — keine Änderung wird mehr stumm komplett verworfen.\n\n• Calendar, Todos, Habits, Rezepte: alle nutzen jetzt denselben sicheren Sync-Mechanismus.\n\n🔧 UNTER DER HAUBE:\n\n• Eine einzige Outbox für alle Bereiche, mit Idempotency-Keys gegen Doppel-Inserts.\n\n• Per-field Last-Write-Wins mit Dirty-Flag-Schutz: lokale Änderungen mit offener Sync-Operation sind immutable für eingehende Server-Daten.\n\n• Shopping-DB konsolidiert (war auf zwei separaten SQLite-Dateien verteilt — jetzt eine).\n\n• 6 domain-spezifische E2E-Tests sichern, dass der Bug nicht zurückkommt.\n\n⚠️ HINWEIS:\n\nBackend-Welle-1-Endpoints müssen aktiv sein. Falls Server noch nicht aktualisiert: App läuft, aber Sync-Nachholung wartet.\n\nVersion: 1.5.0+78",
