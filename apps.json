@@ -25,6 +25,24 @@
       ],
       "versions": [
         {
+          "version": "2.0.1",
+          "date": "2026-05-03",
+          "localizedDescription": "🐝 STABILITÄT + AUFRÄUMARBEITEN\n\nEin Wartungs-Update mit Fokus auf Sync-Stabilität und besserer Diagnostik. Nichts Sichtbares ändert sich am UI; unter der Haube wird einiges sauberer.\n\n📱 WAS SICH ÄNDERT (für dich kaum sichtbar):\n\n• Cross-Device-Schutz für Einkaufslisten: Wenn du gleichzeitig mit jemand anderem dasselbe Item änderst (zum Beispiel: du löscht „Brot\", deine Frau hakt es im selben Moment ab), erkennt der Server jetzt den Konflikt sauber. Vorher konnte je nach Reihenfolge eine Änderung still verloren gehen.\n\n• Rezept-Import braucht jetzt zwingend eine Verbindung. Vorher gab's einen Offline-Fallback, der ein Fake-Rezept mit erfundenen Zutaten erzeugte (z.B. „2 Zwiebeln, 500g Hackfleisch\") — irreführend, weil's wie ein echtes Rezept aussah. Jetzt: klare Fehlermeldung wenn kein Netz.\n\n• Bessere Fehler-Logs: Wenn beim Caching der Einkaufsliste etwas schiefgeht, taucht das jetzt im Debug-Log mit Kontext auf. Hilft mir bei zukünftigen Bug-Suchen, du merkst nichts davon im Normalbetrieb.\n\n🔧 UNTER DER HAUBE:\n\n• Auto-Übersetzung von importierten Rezepten ist komplett raus (war qualitativ nicht überzeugend, Maintenance-Aufwand passte nicht).\n\n• Legacy-Sync-Pfad gelöscht — die App hat nur noch einen Outbox-Mechanismus statt zwei parallele. ~600 Zeilen Code weg, weniger Bug-Oberfläche.\n\n• Auf der Server-Seite läuft jetzt Welle-1: alle Bereiche haben Per-Field-Timestamps, soft-delete via Tombstones, optimistische Sperren auf DELETE. Die App nutzt davon bisher nur If-Unmodified-Since für Einkaufslisten — die anderen Bereiche folgen in Welle-2.\n\n⚠️ HINWEIS:\n\nWenn du oft Rezepte offline importiert hast und dabei den Fake-Platzhalter erwartet hast: das geht nicht mehr. Stattdessen: erst ins Netz, dann importieren.\n\nVersion: 2.0.1+81",
+          "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla_v2.0.1.ipa",
+          "size": 12817462,
+          "sha256": "09b59cb6efd12b6725ebdee5a38dc01eb4f56f0882b796009ec44383e81e6239",
+          "minOSVersion": "12.0",
+          "androidAssets": [
+            {
+              "abi": "arm64-v8a",
+              "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla-v2.0.1-arm64-v8a.apk",
+              "size": 34919232,
+              "sha256": "471a33b8675b15f2bc6a8ba53c829da87bf3ffdc23558501803ce37d86a0b0a3",
+              "minSdkVersion": 23
+            }
+          ]
+        },
+        {
           "version": "2.0.0",
           "date": "2026-05-02",
           "localizedDescription": "🐝 SYNC-FIX FÜR EINKAUFSLISTE\n\nDer Bug mit hängenden Einkaufslisten-Änderungen ist weg.\n\n📱 WAS SICH ÄNDERT:\n\n• Einkaufsliste synchronisiert wieder zuverlässig. Wer in v1.5.0 Änderungen gemacht hat, die in „X ausstehende Änderungen\" hängen geblieben sind: einmal Pull-to-Refresh auf der Einkaufsliste — und sie sind weg.\n\n• Pull-to-Refresh ignoriert jetzt das Backoff-Fenster. Wenn du aktiv „jetzt syncen\" sagst, wird auch jetzt synct — nicht erst in 30 Minuten.\n\n• Retry-Wartezeit max. 5 Minuten statt 30. Dein Heimserver verdient keine Geduld wie ein dauerhaft überlasteter Cloud-Service.\n\n🔧 UNTER DER HAUBE:\n\nIn v1.5.0 wurde der Shopping-Outbox-Adapter zentral in main.dart registriert — leider mit leerer Server-URL und ohne Auth-Token. Folge: jeder Sync-Versuch lief gegen einen ungültigen Endpoint, das System markierte ihn als „nochmal probieren später\", die Wartezeit verdoppelte sich bei jedem Versuch bis zur 30-Minuten-Obergrenze. Symptom: 11 Änderungen blieben „ausstehend\" hängen.\n\nDie 5 anderen Bereiche (Notizen, Kalender, Todos, Habits, Rezepte) haben Adapter-Registrierung schon richtig — direkt im jeweiligen Provider mit echtem Auth + URL. v2.0.0 zieht Shopping in dasselbe Pattern. Ab jetzt: ein Mechanismus für alle 6 Bereiche, klar dokumentiert, leichter zu debuggen.\n\nKeine Backend-Änderungen nötig.\n\nVersion: 2.0.0+80",
