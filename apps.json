@@ -25,6 +25,24 @@
       ],
       "versions": [
         {
+          "version": "2.0.2",
+          "date": "2026-05-04",
+          "localizedDescription": "🐝 BUGFIX: HÄNGENDER REZEPT-IMPORT WIRD WEGGEPUTZT\n\nWartungs-Update mit zwei kleinen Fixes für die Sync-Status-Seite.\n\n📱 WAS SICH ÄNDERT:\n\n• „Geist-Operationen\" werden beim App-Start automatisch entfernt. Falls bei dir ein Rezept-Import oder eine andere Operation seit Tagen mit „ausstehend\" markiert war ohne dass je etwas passiert ist — nach dem Update verschwindet die Anzeige automatisch.\n\n• Verwerfen-Button auf der Sync-Status-Seite jetzt auch für ausstehende Operationen, nicht nur für fehlgeschlagene. Falls in Zukunft mal wieder eine Operation hängen bleibt, kannst du sie selbst wegwischen ohne App-Reinstall.\n\n🔧 HINTERGRUND:\n\nIn v2.0.1 wurde der alte Sync-Pfad endgültig abgebaut. Operationen, die noch vor dem Umbau in der Warteschlange standen, wurden vom neuen Sync-Mechanismus aber nicht mehr verarbeitet — sie blieben einfach liegen. Diese Version räumt sie weg.\n\nVersion: 2.0.2+82",
+          "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla_v2.0.2.ipa",
+          "size": 12818242,
+          "sha256": "cc55426e469c3146b65d31dc2a65bda2b507e9954be585874178190320876304",
+          "minOSVersion": "12.0",
+          "androidAssets": [
+            {
+              "abi": "arm64-v8a",
+              "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla-v2.0.2-arm64-v8a.apk",
+              "size": 34919232,
+              "sha256": "dd9131e5ea33ca05145336417df8f2f5749d6ecdeccf7ff7b9bbf6f1d0e85e6d",
+              "minSdkVersion": 23
+            }
+          ]
+        },
+        {
           "version": "2.0.1",
           "date": "2026-05-03",
           "localizedDescription": "🐝 STABILITÄT + AUFRÄUMARBEITEN\n\nEin Wartungs-Update mit Fokus auf Sync-Stabilität und besserer Diagnostik. Nichts Sichtbares ändert sich am UI; unter der Haube wird einiges sauberer.\n\n📱 WAS SICH ÄNDERT (für dich kaum sichtbar):\n\n• Cross-Device-Schutz für Einkaufslisten: Wenn du gleichzeitig mit jemand anderem dasselbe Item änderst (zum Beispiel: du löscht „Brot\", deine Frau hakt es im selben Moment ab), erkennt der Server jetzt den Konflikt sauber. Vorher konnte je nach Reihenfolge eine Änderung still verloren gehen.\n\n• Rezept-Import braucht jetzt zwingend eine Verbindung. Vorher gab's einen Offline-Fallback, der ein Fake-Rezept mit erfundenen Zutaten erzeugte (z.B. „2 Zwiebeln, 500g Hackfleisch\") — irreführend, weil's wie ein echtes Rezept aussah. Jetzt: klare Fehlermeldung wenn kein Netz.\n\n• Bessere Fehler-Logs: Wenn beim Caching der Einkaufsliste etwas schiefgeht, taucht das jetzt im Debug-Log mit Kontext auf. Hilft mir bei zukünftigen Bug-Suchen, du merkst nichts davon im Normalbetrieb.\n\n🔧 UNTER DER HAUBE:\n\n• Auto-Übersetzung von importierten Rezepten ist komplett raus (war qualitativ nicht überzeugend, Maintenance-Aufwand passte nicht).\n\n• Legacy-Sync-Pfad gelöscht — die App hat nur noch einen Outbox-Mechanismus statt zwei parallele. ~600 Zeilen Code weg, weniger Bug-Oberfläche.\n\n• Auf der Server-Seite läuft jetzt Welle-1: alle Bereiche haben Per-Field-Timestamps, soft-delete via Tombstones, optimistische Sperren auf DELETE. Die App nutzt davon bisher nur If-Unmodified-Since für Einkaufslisten — die anderen Bereiche folgen in Welle-2.\n\n⚠️ HINWEIS:\n\nWenn du oft Rezepte offline importiert hast und dabei den Fake-Platzhalter erwartet hast: das geht nicht mehr. Stattdessen: erst ins Netz, dann importieren.\n\nVersion: 2.0.1+81",
