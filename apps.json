@@ -25,6 +25,24 @@
       ],
       "versions": [
         {
+          "version": "2.0.4",
+          "date": "2026-05-07",
+          "localizedDescription": "🐝 ECHTES PER-FIELD-LWW JETZT AKTIV\n\nIn v2.0.3 hat die App schon den Cross-Device-Schutz beim Schreiben (If-Unmodified-Since) bekommen. v2.0.4 schließt die Lücke beim Lesen: pro-Feld-Zeitstempel vom Server werden ab jetzt im lokalen Cache gespeichert.\n\n📱 DAS BEDEUTET KONKRET:\n\nSzenario, das jetzt sauber funktioniert:\n\n• Du änderst um 9:00 den Titel einer Notiz auf deinem iPhone, syncst.\n• Deine Frau ändert um 10:00 den Inhalt derselben Notiz auf ihrem Android, syncst.\n• Du öffnest mittags die App und holst dir die Notiz vom Server.\n\nVorher hätte der Merger nur den Row-Zeitstempel (10:00, ihrer) gesehen und deinen Titel-Stand mit ihrem Server-Stand überschrieben — selbst wenn ihre Änderung gar nicht den Titel betraf. Jetzt sieht er pro Feld: Titel zuletzt um 9:00 (von dir, hast du, behalten), Inhalt zuletzt um 10:00 (von ihr, kommt rein). Beide Änderungen überleben.\n\nGilt jetzt für alle 6 Bereiche: Notizen, Kalender, ToDos, Gewohnheiten, Rezepte, Einkaufslisten.\n\n🔧 UNTER DER HAUBE:\n\n• Server-Responses tragen seit Welle-1 (vor 4 Tagen) eine `field_timestamps`-Map pro Eintrag. Diese wird ab v2.0.4 in den lokalen SQLite-Cache geschrieben (Spalte `field_timestamps`).\n• Der bestehende PerFieldMerger nutzt diese Daten ab dem nächsten Refresh — keine Code-Änderung am Merger selbst nötig, der wartete nur auf die echten Daten.\n• Lokale dirty-Schreibungen (deine eigenen ungesendeten Änderungen) sind weiterhin geschützt durch den Dirty-Flag — die werden nicht von Server-Refreshes überschrieben bevor der Outbox-Op durchgegangen ist.\n\n⚠️ NICHTS, WAS DU MERKEN SOLLTEST:\n\nBei Single-Device-Nutzung ändert sich nichts. Der Effekt zeigt sich nur in dem konkreten Multi-Device-Szenario oben — und auch da unsichtbar (kein Konflikt-Dialog, keine UI-Änderung). Es ist einfach so, dass deine Änderungen jetzt nicht mehr durch nicht-überlappende Änderungen anderer Geräte unterspült werden können.\n\nVersion: 2.0.4+84",
+          "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla_v2.0.4.ipa",
+          "size": 12811583,
+          "sha256": "088b1bd629fcc8613100b7fda96d41ba472599814bed1c76a830359d419e1eed",
+          "minOSVersion": "12.0",
+          "androidAssets": [
+            {
+              "abi": "arm64-v8a",
+              "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla-v2.0.4-arm64-v8a.apk",
+              "size": 34919228,
+              "sha256": "656d50faa3c652f4055e151c862f5524b35bd5368334c6b8206d671d056d5116",
+              "minSdkVersion": 23
+            }
+          ]
+        },
+        {
           "version": "2.0.3",
           "date": "2026-05-07",
           "localizedDescription": "🐝 CROSS-DEVICE-SCHUTZ JETZT IN ALLEN BEREICHEN\n\nWas in v2.0.1 nur für die Einkaufsliste lief, gilt ab jetzt für alles: Notizen, Kalender, ToDos, Gewohnheiten, Rezepte.\n\n📱 WAS SICH ÄNDERT:\n\n• Optimistische Sperren überall: Wenn du gleichzeitig mit jemand anderem dasselbe bearbeitest (zum Beispiel: du löscht eine Notiz, deine Frau ändert sie im selben Moment), erkennt der Server jetzt den Konflikt und der Sieger wird sauber bestimmt — keine stillen Datenverluste mehr je nach Reihenfolge der Server-Erreichbarkeit.\n\n• Was geschützt wird: Notizen-Updates/Löschen/Pinnen/Teilen, Kalender-Events bearbeiten/löschen/abhaken, ToDos in allen Varianten (zuweisen, beanspruchen, abhaken, löschen), Habits (komplett-Track), Rezepte (bearbeiten, löschen, Sichtbarkeit ändern).\n\n• Konflikte sind in dieser Version noch still — heißt: bei einem Konflikt setzt sich automatisch der Server-Stand durch, deine kollidierende Änderung wird verworfen. UI-Hinweise dazu kommen in einer späteren Welle.\n\n🔧 UNTER DER HAUBE:\n\n• ~3000 Zeilen Code aus den Sync-Adaptern entfernt — alter Sync-Pfad war seit v2.0.1 nicht mehr in Verwendung, jetzt ist er auch physisch weg.\n\n• Neue Helper-Funktion in der Datenbank-Schicht: `getServerUpdatedAt(entityType, entityId)` liest die letzte bekannte Server-Version pro Eintrag aus dem lokalen Cache. Wird beim Anstoßen von Sync-Operationen genutzt, um dem Server zu sagen „Ich denke der Eintrag ist auf Stand T\".\n\n⚠️ NICHTS, WAS DU MERKEN SOLLTEST:\n\nBei normalem Betrieb (eine Person, ein Gerät) ändert sich gar nichts. Der Schutz greift nur in dem konkreten Szenario, wo zwei Geräte gleichzeitig denselben Eintrag berühren.\n\nVersion: 2.0.3+83",
