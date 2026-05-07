@@ -25,6 +25,24 @@
       ],
       "versions": [
         {
+          "version": "2.0.5",
+          "date": "2026-05-07",
+          "localizedDescription": "🐝 SCHNELLERER SYNC IM HINTERGRUND\n\nWelle-2 ist mit dieser Version komplett. Auto-Refresh läuft jetzt inkrementell — die App holt nur noch was sich seit dem letzten Sync verändert hat, statt jedes Mal die ganze Liste neu zu laden.\n\n📱 WAS SICH ÄNDERT:\n\n• Schnellere App-Starts und Hintergrund-Refreshes. Wenn sich nichts geändert hat: leere Server-Antwort, schnell durch. Wenn ein Item geändert wurde: nur dieses kommt — das spart Datenvolumen und macht die App spürbar reaktiver.\n\n• Pull-to-Refresh (auf der Liste nach unten ziehen) lädt weiterhin die komplette Liste vom Server. Das ist Absicht — nur so erfährt die App von Einträgen, die ein anderes Gerät gelöscht hat. Wenn dir also mal ein Eintrag verdächtig vorkommt: einmal nach unten ziehen, alles ist sauber synct.\n\n🔧 UNTER DER HAUBE:\n\n• Pro Bereich wird ein „letzter Sync\"-Zeitstempel gespeichert (in den App-Preferences). Beim nächsten Auto-Refresh fragt die App den Server „was hat sich seit T geändert?\" via `?since={ms}`-Parameter.\n\n• Der Server filtert Tombstones (gelöschte Einträge) aus diesen `?since`-Antworten. Deshalb die Pull-to-Refresh-Konvention: nur ein voller Refresh holt Lösch-Information ein. Eine Hintergrund-Synchronisation würde sonst Phantom-Einträge zeigen.\n\n• 5-Sekunden-Skew-Buffer beim Speichern des Zeitstempels — das fängt minimale Uhr-Abweichungen zwischen Server und Gerät ab und stellt sicher, dass keine grenzwertigen Updates verloren gehen.\n\n✅ WELLE-2 ABGESCHLOSSEN\n\nMit v2.0.5 ist die komplette Welle-2-Roadmap durch:\n• v2.0.1: Cross-Device-Schutz für Einkaufslisten\n• v2.0.3: Schutz auf alle 6 Bereiche ausgeweitet\n• v2.0.4: Echtes per-Feld-LWW (verschiedene Felder gleichzeitig editierbar ohne Datenverlust)\n• v2.0.5: Inkrementeller Sync für schnellere Refreshes\n\nVersion: 2.0.5+85",
+          "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla_v2.0.5.ipa",
+          "size": 12822442,
+          "sha256": "77edfd642dae67af412788e3c2b05ff5e53b67afc0d9685177d5871533e476f1",
+          "minOSVersion": "12.0",
+          "androidAssets": [
+            {
+              "abi": "arm64-v8a",
+              "downloadURL": "https://github.com/fampla/fampla-releases/raw/main/Fampla-v2.0.5-arm64-v8a.apk",
+              "size": 34919232,
+              "sha256": "5670a79fa3648f98f339580a8bc17b86ec006a03cf2342c885641e7ebb4fa5c7",
+              "minSdkVersion": 23
+            }
+          ]
+        },
+        {
           "version": "2.0.4",
           "date": "2026-05-07",
           "localizedDescription": "🐝 ECHTES PER-FIELD-LWW JETZT AKTIV\n\nIn v2.0.3 hat die App schon den Cross-Device-Schutz beim Schreiben (If-Unmodified-Since) bekommen. v2.0.4 schließt die Lücke beim Lesen: pro-Feld-Zeitstempel vom Server werden ab jetzt im lokalen Cache gespeichert.\n\n📱 DAS BEDEUTET KONKRET:\n\nSzenario, das jetzt sauber funktioniert:\n\n• Du änderst um 9:00 den Titel einer Notiz auf deinem iPhone, syncst.\n• Deine Frau ändert um 10:00 den Inhalt derselben Notiz auf ihrem Android, syncst.\n• Du öffnest mittags die App und holst dir die Notiz vom Server.\n\nVorher hätte der Merger nur den Row-Zeitstempel (10:00, ihrer) gesehen und deinen Titel-Stand mit ihrem Server-Stand überschrieben — selbst wenn ihre Änderung gar nicht den Titel betraf. Jetzt sieht er pro Feld: Titel zuletzt um 9:00 (von dir, hast du, behalten), Inhalt zuletzt um 10:00 (von ihr, kommt rein). Beide Änderungen überleben.\n\nGilt jetzt für alle 6 Bereiche: Notizen, Kalender, ToDos, Gewohnheiten, Rezepte, Einkaufslisten.\n\n🔧 UNTER DER HAUBE:\n\n• Server-Responses tragen seit Welle-1 (vor 4 Tagen) eine `field_timestamps`-Map pro Eintrag. Diese wird ab v2.0.4 in den lokalen SQLite-Cache geschrieben (Spalte `field_timestamps`).\n• Der bestehende PerFieldMerger nutzt diese Daten ab dem nächsten Refresh — keine Code-Änderung am Merger selbst nötig, der wartete nur auf die echten Daten.\n• Lokale dirty-Schreibungen (deine eigenen ungesendeten Änderungen) sind weiterhin geschützt durch den Dirty-Flag — die werden nicht von Server-Refreshes überschrieben bevor der Outbox-Op durchgegangen ist.\n\n⚠️ NICHTS, WAS DU MERKEN SOLLTEST:\n\nBei Single-Device-Nutzung ändert sich nichts. Der Effekt zeigt sich nur in dem konkreten Multi-Device-Szenario oben — und auch da unsichtbar (kein Konflikt-Dialog, keine UI-Änderung). Es ist einfach so, dass deine Änderungen jetzt nicht mehr durch nicht-überlappende Änderungen anderer Geräte unterspült werden können.\n\nVersion: 2.0.4+84",
